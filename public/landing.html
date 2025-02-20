@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Showcase - Welcome</title>
+  <style>
+    :root {
+      --primary-color: #3f51b5;
+      --secondary-color: #ff4081;
+      --background-color: #1e1e2f;
+      --light-color: #f4f4f4;
+      --card-bg: #2a2a3d;
+      --transition-speed: 0.3s;
+      --gradient: linear-gradient(45deg, #3f51b5, #ff4081);
+    }
+
+    /* Enhanced Navbar Styles */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(30, 30, 47, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+    }
+
+    /* Brand (optional text/logo on the left) */
+    .brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--light-color);
+    }
+    .brand a {
+      color: var(--light-color);
+      text-decoration: none;
+    }
+
+    /* Hamburger Menu Button */
+    .menu-toggle {
+      display: none; /* Hidden by default (shown in mobile via media query) */
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+    .menu-toggle .hamburger {
+      width: 25px;
+      height: 2px;
+      background-color: var(--light-color);
+      position: relative;
+      transition: all 0.3s ease;
+      display: block;
+    }
+    .menu-toggle .hamburger::before,
+    .menu-toggle .hamburger::after {
+      content: '';
+      width: 25px;
+      height: 2px;
+      background-color: var(--light-color);
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+    .menu-toggle .hamburger::before {
+      top: -8px;
+    }
+    .menu-toggle .hamburger::after {
+      top: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link {
+      color: var(--light-color);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::before {
+      width: 100%;
+    }
+
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .user-profile:hover {
+      transform: translateY(-2px);
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--gradient);
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .default-avatar {
+      width: 100%;
+      height: 100%;
+      padding: 8px;
+      fill: var(--light-color);
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: var(--light-color);
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .auth-button {
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .signup-btn {
+      background: var(--gradient);
+      color: var(--light-color);
+    }
+    .login-btn{
+      background: var(--gradient);
+      color: var(--light-color);
+    }
+
+    .logout-btn {
+      background: transparent;
+      color: var(--secondary-color);
+      border: 1px solid var(--secondary-color);
+    }
+
+    /* Mobile Responsive Navbar */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+      .nav-links {
+        position: absolute;
+        top: 70px; 
+        left: 0;
+        right: 0;
+        background: rgba(30, 30, 47, 0.95);
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        transform: translateY(-200%);
+      }
+      .nav-links.active {
+        transform: translateY(0);
+      }
+    }
+
+    /* Original Landing Page Styles Below */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #3a3a52);
+      color: var(--light-color);
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    .hero {
+      height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(30, 30, 47, 0.65);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 20px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5em;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      animation: slideIn 1s ease-in-out;
+    }
+
+    .hero-content h3 {
+      font-size: 1.5em;
+      background: linear-gradient(45deg, var(--light-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      animation: slideIn 1s ease-in-out;
+    }
+
+    .hero-content p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      animation: slideIn 1s ease-in-out 0.3s both;
+    }
+
+    .hero-content a {
+      background: var(--primary-color);
+      color: var(--light-color);
+      padding: 12px 25px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: background var(--transition-speed);
+      animation: slideIn 1s ease-in-out 0.6s both;
+    }
+
+    .hero-content a:hover {
+      background: var(--secondary-color);
+    }
+
+    .slideshow {
+      margin: 40px auto;
+      max-width: 1000px;
+      overflow: hidden;
+      position: relative;
+      padding: 30px 0;
+    }
+
+    .carousel-track {
+      display: flex;
+      animation: scroll 40s linear infinite;
+      width: max-content;
+    }
+
+    .carousel-item {
+      flex: 0 0 300px;
+      height: 200px;
+      margin: 0 15px;
+      border-radius: 15px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease;
+      border: 2px solid transparent;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .carousel-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, 
+        rgba(63,81,181,0.3), 
+        rgba(255,64,129,0.3));
+      z-index: 1;
+    }
+
+    .carousel-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: relative;
+      z-index: 0;
+    }
+
+    .info-section {
+      margin-top: 30px;
+      padding: 60px 20px;
+      background: var(--background-color);
+      text-align: center;
+    }
+
+    .info-section h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+
+    .info-section .blocks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .block {
+      background: #2a2a3d;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .block:hover {
+      transform: translateY(-10px);
+    }
+
+    .block h3 {
+      margin-bottom: 10px;
+      color: var(--secondary-color);
+    }
+
+    .block p {
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+
+    @keyframes fadeIn { 
+      from { opacity: 0; } 
+      to { opacity: 1; } 
+    }
+    @keyframes slideIn { 
+      from { transform: translateY(30px); opacity: 0; } 
+      to { transform: translateY(0); opacity: 1; } 
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Updated Navbar -->
+  <nav class="navbar">
+    <!-- Optional brand text/logo -->
+    <!-- <div class="brand">
+      <a href="/">UNICOLLAB</a>
+    </div> -->
+
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <span class="hamburger"></span>
+    </button>
+
+    <div class="nav-links" id="navLinks">
+      <a href="/upload" class="nav-link">Add Project</a>
+      <a href="/projects" class="nav-link">View Projects</a>
+      <a href="/ads" class="nav-link">Publish Announcements</a>
+      <a href="/view-ads" class="nav-link">View Ads</a>
+    </div>
+
+    <div class="user-section">
+      <div id="user-profile" class="user-profile" style="display: none;">
+        <div class="user-avatar">
+          <img id="user-avatar-img" alt="User Avatar">
+          <svg id="default-avatar" class="default-avatar" viewBox="0 0 24 24" style="display: none;">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 
+                     10 10 10-4.48 10-10S17.52 2 
+                     12 2zm0 3c1.66 0 3 1.34 3 
+                     3s-1.34 3-3 3-3-1.34-3-3 
+                     1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 
+                     4-3.08 6-3.08 1.99 0 5.97 1.09 6 
+                     3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+          </svg>
+        </div>
+        <div class="user-name" id="user-name"></div>
+      </div>
+      
+      <div class="auth-buttons" id="auth-buttons">
+        <a href="/signup" class="auth-button signup-btn">Sign Up</a>
+        <a href="/login" class="auth-button login-btn">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Original Landing Page Content Below -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>UNICOLLAB</h1>
+      <h3>Showcase Your Creativity</h3>
+      <p>
+        Welcome to Project Showcase – the ultimate platform for artists, coders, designers, and innovators to share and explore inspiring projects from across various domains.
+      </p>
+      <a href="/upload">Get Started</a>
+    </div>
+  </section>
+
+  <section class="slideshow">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </section>
+
+  <section class="info-section">
+    <h2>Why Project Showcase?</h2>
+    <div class="blocks">
+      <div class="block">
+        <h3>Easy Uploads</h3>
+        <p>Seamlessly upload your projects in images, videos, or code archives with just a few clicks.</p>
+      </div>
+      <div class="block">
+        <h3>Explore & Connect</h3>
+        <p>Discover projects from creators around the world and get inspired by diverse ideas.</p>
+      </div>
+      <div class="block">
+        <h3>Secure & Scalable</h3>
+        <p>Our robust backend built on Node.js, Express, and MongoDB ensures your work is safe and scalable.</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Toggle Menu for Mobile
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    // Updated User Handling
+    async function loadNavbarUserDetails() {
+      try {
+        const res = await fetch('/api/users/me', { credentials: 'include' });
+        if (!res.ok) throw new Error('Not authenticated');
+        
+        const data = await res.json();
+        if (data.success) {
+          const user = data.data;
+          document.getElementById('user-profile').style.display = 'flex';
+          document.getElementById('auth-buttons').style.display = 'none';
+          
+          const avatarImg = document.getElementById('user-avatar-img');
+          const defaultAvatar = document.getElementById('default-avatar');
+          if (user.avatar) {
+            avatarImg.src = user.avatar;
+            defaultAvatar.style.display = 'none';
+          } else {
+            avatarImg.style.display = 'none';
+            defaultAvatar.style.display = 'block';
+          }
+          document.getElementById('user-name').textContent = user.name;
+        }
+      } catch (err) {
+        document.getElementById('auth-buttons').style.display = 'flex';
+        document.getElementById('user-profile').style.display = 'none';
+      }
+    }
+
+    // Initialize Carousel
+    async function initCarousel() {
+      try {
+        const res = await fetch('/api/projects');
+        const result = await res.json();
+        if (result.success) {
+          const projects = result.data.filter(p => p.fileUrl && /\.(png|jpg|jpeg|gif)$/i.test(p.fileUrl));
+          const track = document.getElementById('carouselTrack');
+          const items = [...projects, ...projects].map(proj => `
+            <div class="carousel-item">
+              <img src="/${proj.fileUrl}" alt="${proj.title}">
+            </div>
+          `).join('');
+          track.innerHTML = items;
+        }
+      } catch (error) {
+        console.error('Carousel error:', error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadNavbarUserDetails();
+      initCarousel();
+
+      document.getElementById('user-profile').addEventListener('click', () => {
+        window.location.href = '/me';
+      });
+    });
+  </script>
+</body>
+</html>

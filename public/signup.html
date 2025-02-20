@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Showcase - User Signup</title>
+  <style>
+    /* (Your CSS styles remain largely similar) */
+    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1e1e2f, #3a3a52); color: #f4f4f4; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .signup-container { background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); width: 100%; max-width: 400px; }
+    h2 { text-align: center; margin-bottom: 20px; }
+    form label { display: block; margin-bottom: 8px; font-weight: bold; }
+    form input, form select { width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 5px; background: rgba(255, 255, 255, 0.1); color: #f4f4f4; }
+    form input[type="submit"] { background: #3f51b5; cursor: pointer; transition: background 0.3s; }
+    form input[type="submit"]:hover { background: #ff4081; }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>User Signup</h2>
+    <form id="signupForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+      
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+      
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+      
+      <label for="domain">Select Your Domain</label>
+      <select id="domain" name="domain" required>
+        <option value="" disabled selected>-- Choose Domain --</option>
+        <option value="art">Art</option>
+        <option value="coding">Coding</option>
+        <option value="design">Design</option>
+        <option value="ai">AI</option>
+        <option value="cybersecurity">Cybersecurity</option>
+        <option value="webdev">Web Development</option>
+      </select>
+      <input type="submit" value="Sign Up" />
+    </form>
+  </div>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = {
+        name: this.name.value,
+        email: this.email.value,
+        password: this.password.value,
+        domain: this.domain.value
+      };
+
+      try {
+        const response = await fetch('/api/users/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        const result = await response.json();
+        if (result.success) {
+          alert('User created successfully');
+          this.reset();
+          window.location.href = '/login';
+        } else {
+          alert('Error: ' + result.error);
+        }
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
