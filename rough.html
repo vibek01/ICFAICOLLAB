@@ -1,121 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Tilt & Glow Container</title>
-  <style>
-    /* ---- Page Reset & Basic Setup ---- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: #0f0f17;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glowing Hover Button with Moving Star Sparkles</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #000;
+      }
 
-    /* ---- Perspective Container ---- */
-    /* perspective: "distance" from the object, enabling 3D transforms */
-    .tilt-container {
-      perspective: 1000px; 
-      width: 800px;
-      height: 300px;
-      position: relative;
-    }
+      .button {
+        position: relative;
+        padding: 15px 40px;
+        font-size: 20px;
+        color: #000;
+        background: #00eaff;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 0 10px #00eaff;
+        /* Allow sparkles to appear outside the button */
+        overflow: visible;
+      }
 
-    /* ---- The Actual Card ---- */
-    .tilt-card {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1e1e2f, #3a3a52);
-      border-radius: 20px;
-      transform-style: preserve-3d; /* important for 3D tilt */
-      transition: transform 0.1s ease-out;
-      overflow: hidden; /* so the glow doesn’t spill outside */
-      position: relative;
-    }
+      .button:hover {
+        color: #00eaff;
+        background: transparent;
+        border: 2px solid #00eaff;
+      }
 
-    /* ---- Some Example Text (Optional) ---- */
-    .tilt-card h2, .tilt-card p {
-      margin: 20px;
-    }
-    .tilt-card h2 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
+      /* Sparkles Container */
+      .sparkles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
 
-    /* ---- Glow Element ---- */
-    /*
-      We use an absolutely positioned div to create the "moving glow".
-      We'll reposition it with JS based on mouse coords.
-    */
-    .glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      pointer-events: none;
-      background: radial-gradient(circle, rgba(80,255,180,0.4), transparent 70%);
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease-out;
-    }
-  </style>
-</head>
-<body>
+      /* Each sparkle as a star */
+      .sparkles span {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: #fff;
+        box-shadow: 0 0 10px #fff;
+        /* Create a star shape using clip-path */
+        clip-path: polygon(
+          50% 0%,
+          61% 35%,
+          98% 35%,
+          68% 57%,
+          79% 91%,
+          50% 70%,
+          21% 91%,
+          32% 57%,
+          2% 35%,
+          39% 35%
+        );
+        opacity: 0;
+      }
 
-<div class="tilt-container">
-  <!-- The interactive card -->
-  <div class="tilt-card">
-    <!-- Example content (not required) -->
-    <h2>Empowering Coders, Enabling Dreams</h2>
-    <p>Hover to see the tilt and glow effect.</p>
+      /* Animate each star on hover */
+      .button:hover .sparkles span {
+        animation: moveOut 1s forwards ease-out;
+      }
 
-    <!-- Glow overlay -->
-    <div class="glow"></div>
-  </div>
-</div>
-
-<script>
-  const container = document.querySelector('.tilt-container');
-  const card = container.querySelector('.tilt-card');
-  const glow = container.querySelector('.glow');
-
-  // Listen for mouse movement over the container
-  container.addEventListener('mousemove', (e) => {
-    // Get container bounds
-    const rect = container.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left; 
-    const mouseY = e.clientY - rect.top;
-
-    // Calculate rotation: subtract half the container’s width/height so the “center” is zero
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    // The farther the cursor from center, the greater the rotation
-    const rotateX = (mouseY - centerY) / 10; // adjust “/10” to make tilt stronger/weaker
-    const rotateY = (mouseX - centerX) / 10;
-
-    // Apply 3D tilt
-    card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
-
-    // Move the glow so its center follows the cursor
-    glow.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-  });
-
-  // Optional: Reset tilt when the mouse leaves the container
-  container.addEventListener('mouseleave', () => {
-    card.style.transform = 'rotateX(0) rotateY(0)';
-    glow.style.transform = 'translate(50%, 50%)';
-  });
-</script>
-
-</body>
+      /* Each sparkle moves from its starting point to a defined offset */
+      @keyframes moveOut {
+        0% {
+          opacity: 1;
+          transform: translate(0, 0) scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translate(calc(var(--tx) / 2), calc(var(--ty) / 2))
+            scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(var(--tx), var(--ty)) scale(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="button">
+      Hover Me
+      <div class="sparkles">
+        <!-- Each span uses inline styles for position, animation delay, and its final translation -->
+        <span
+          style="
+            top: -10px;
+            left: 20%;
+            animation-delay: 0s;
+            --tx: -40px;
+            --ty: -40px;
+          "
+        ></span>
+        <span
+          style="
+            top: 10px;
+            right: 10%;
+            animation-delay: 0.3s;
+            --tx: 40px;
+            --ty: -40px;
+          "
+        ></span>
+        <span
+          style="
+            bottom: -10px;
+            left: 40%;
+            animation-delay: 0.6s;
+            --tx: -40px;
+            --ty: 40px;
+          "
+        ></span>
+        <span
+          style="
+            bottom: 20px;
+            right: 30%;
+            animation-delay: 0.9s;
+            --tx: 40px;
+            --ty: 40px;
+          "
+        ></span>
+      </div>
+    </button>
+  </body>
 </html>
