@@ -48,10 +48,11 @@ app.get('/view-ads', (req, res) => {
 app.get('/me', protect, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/user.html'));
 });
-
-// New route for All Users page
 app.get('/all-users', protect, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/all-user.html'));
+});
+app.get('/about', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/about.html'));
 });
 
 module.exports = app;
