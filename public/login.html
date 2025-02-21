@@ -1,54 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Project Showcase</title>
-  <style>
-    body { font-family: sans-serif; background: #1e1e2f; color: #f4f4f4; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-    .login-container { background: rgba(255,255,255,0.1); padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); width: 400px; }
-    .login-container h2 { text-align: center; margin-bottom: 20px; }
-    form label { display: block; margin-bottom: 8px; font-weight: bold; }
-    form input { width: 100%; padding: 10px; margin-bottom: 15px; border: none; border-radius: 4px; background: rgba(255,255,255,0.1); color: #f4f4f4; }
-    form input[type="submit"] { width: 100%; padding: 12px; background: #3f51b5; color: #f4f4f4; border: none; border-radius: 4px; cursor: pointer; }
-    form input[type="submit"]:hover { background: #ff4081; }
-  </style>
-</head>
-<body>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required />
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required />
-      <input type="submit" value="Login" />
-    </form>
-  </div>
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const data = {
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-      };
-      try {
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if(result.success) {
-          alert('Logged in successfully');
-          window.location.href = '/me';
-        } else {
-          alert('Login failed: ' + result.message);
-        }
-      } catch (error) {
-        alert('Error: ' + error.message);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Project Showcase</title>
+    <style>
+      :root {
+        --primary-color: #1976d2;
+        --secondary-color: #ff4081;
+        --background-color: #a2b379;
+        --light-color: #333333;
+        --card-bg: #ffffff;
+        --transition-speed: 0.3s;
+        --gradient: linear-gradient(45deg, #1976d2, #ff4081);
       }
-    });
-  </script>
-</body>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(30deg, #ffffff, #92ff7952);
+        color: var(--light-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+      .login-container {
+        background: var(--card-bg);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        width: 400px;
+        position: relative;
+        overflow: hidden;
+      }
+      .login-container::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: var(--gradient);
+        z-index: -1;
+        border-radius: 12px;
+      }
+      .login-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: var(--light-color);
+      }
+      form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        padding-left: 0.5rem;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      form input {
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 15px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        background: #ffffff;
+        color: var(--light-color);
+        font-size: 1rem;
+        transition: all var(--transition-speed) ease;
+        box-sizing: border-box;
+      }
+      form input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
+        background: #ffffff;
+      }
+      form input[type="submit"] {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        background: var(--gradient);
+        color: var(--light-color);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all var(--transition-speed) ease;
+        position: relative;
+        overflow: hidden;
+      }
+      form input[type="submit"]::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.6s;
+      }
+      form input[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 64, 129, 0.3);
+      }
+      form input[type="submit"]:hover::before {
+        left: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <input type="submit" value="Login" />
+      </form>
+    </div>
+
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const data = {
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        };
+
+        try {
+          const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',  // Include cookies if JWT is set as httpOnly
+            body: JSON.stringify(data)
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            alert('Logged in successfully');
+            window.location.href = '/me';
+          } else {
+            // The server might return an 'error' or 'message' property
+            const errorMsg = result.error || result.message || 'Unknown error';
+            alert('Login failed: ' + errorMsg);
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
+        }
+      });
+    </script>
+  </body>
 </html>
