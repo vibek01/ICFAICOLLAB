@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const { protect, adminOnly } = require('./middlewares/auth.middleware');
-import { inject } from "@vercel/analytics";
 
 const app = express();
 connectDB();
@@ -14,7 +13,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(inject());
 
 // Serve static files from the public folder
 app.use(express.static(path.join(__dirname, '../public')));
