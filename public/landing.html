@@ -342,54 +342,98 @@
       }
       /* --- End of Button Styles --- */
 
-      /* --- NEW: 3D Slider Carousel Section --- */
-      .slideshow {
-        position: relative;
-        margin: 40px auto;
-        height: 300px;
-        overflow: hidden;
-      }
-      /* The slider container using the sample design */
-      .slider {
-        position: absolute;
-        width: 150px;
-        height: 200px;
-        top: 10%;
-        left: calc(50% - 100px);
-        transform-style: preserve-3d;
-        transform: perspective(100px);
-        animation: autoRun 90s linear infinite;
-        z-index: 2;
-      }
-      .slider:hover {
-        transform-style: preserve-3d;
-        transform: perspective(100px);
-        z-index: 2;
-        animation: none;
-      }
-      @keyframes autoRun {
-        from {
-          transform: perspective(2000px) rotateX(0deg) rotateY(0deg);
-        }
-        to {
-          transform: perspective(5000px) rotateX(-16deg) rotateY(360deg);
-        }
-      }
-      .slider .item {
-        position: absolute;
-        inset: 0;
-        transform: rotateY(
-            calc((var(--position) - 1) * (260 / var(--quantity)) * 1deg)
-          )
-          translateZ(350px);
-      }
-      .slider .item img {
+      /* --- Updated Carousel Section --- */
+      .carousel-wrapper {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        background: transparent;
+        padding: 40px 0;
       }
-      /* --- End of Slider Carousel Section --- */
+      .carousel-container {
+        width: 90%;
+        max-width: 1200px;
+        overflow: hidden;
+        position: relative;
+        height: 300px;
+        margin: 0 auto;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      /* Pause animation on hover for interactive control */
+      .carousel-container:hover .carousel-track {
+        animation-play-state: paused;
+      }
+      .carousel-track {
+        display: inline-block;
+        white-space: nowrap;
+        animation: scroll 40s linear infinite;
+        padding: 20px 0;
+      }
+      .carousel-item {
+        display: inline-block;
+        width: 300px;
+        height: 250px;
+        margin: 0 20px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        background: var(--card-bg);
+        vertical-align: middle;
+        white-space: normal;
+        cursor: pointer;
+      }
+      .carousel-item:hover {
+        transform: translateY(-10px);
+      }
+      .carousel-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 15px 15px 0 0;
+      }
+      .carousel-content {
+        padding: 15px;
+      }
+      .carousel-content h4 {
+        margin: 0;
+        color: var(--primary-color);
+        font-size: 1.1em;
+      }
+      .carousel-content p {
+        margin: 5px 0 0;
+        font-size: 0.9em;
+        color: var(--light-color);
+      }
+      /* Edge fade effect for immersive feel */
+      .carousel-container::before,
+      .carousel-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 50px;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .carousel-container::before {
+        left: 0;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.8),
+          rgba(255, 255, 255, 0)
+        );
+      }
+      .carousel-container::after {
+        right: 0;
+        background: linear-gradient(
+          to left,
+          rgba(255, 255, 255, 0.8),
+          rgba(255, 255, 255, 0)
+        );
+      }
 
       /* Info Section */
       .info-section {
@@ -473,6 +517,7 @@
         <a href="/projects" class="nav-link">View Projects</a>
         <a href="/upload" class="nav-link">Add Project</a>
         <a href="/view-ads" class="nav-link">View Ads</a>
+        <a href="/all-users" class="nav-link">All Students</a>
         <a href="/about" class="nav-link">ABOUT</a>
       </div>
 
@@ -516,50 +561,27 @@
           Get Started
           <div class="sparkles">
             <span
-              style="
-                top: -10px;
-                left: 20%;
-                animation-delay: 0s;
-                --tx: -40px;
-                --ty: -40px;
-              "
+              style="top: -10px; left: 20%; animation-delay: 0s; --tx: -40px; --ty: -40px;"
             ></span>
             <span
-              style="
-                top: 10px;
-                right: 10%;
-                animation-delay: 0.3s;
-                --tx: 40px;
-                --ty: -40px;
-              "
+              style="top: 10px; right: 10%; animation-delay: 0.3s; --tx: 40px; --ty: -40px;"
             ></span>
             <span
-              style="
-                bottom: -10px;
-                left: 40%;
-                animation-delay: 0.6s;
-                --tx: -40px;
-                --ty: 40px;
-              "
+              style="bottom: -10px; left: 40%; animation-delay: 0.6s; --tx: -40px; --ty: 40px;"
             ></span>
             <span
-              style="
-                bottom: 20px;
-                right: 30%;
-                animation-delay: 0.9s;
-                --tx: 40px;
-                --ty: 40px;
-              "
+              style="bottom: 20px; right: 30%; animation-delay: 0.9s; --tx: 40px; --ty: 40px;"
             ></span>
           </div>
         </a>
       </div>
     </section>
 
-    <!-- Updated Carousel Section using the 3D slider design -->
-    <section class="slideshow">
-      <!-- The slider container; its --quantity property will be set dynamically -->
-      <div class="slider" id="carouselTrack"></div>
+    <!-- Updated Carousel Section with Immersive Carousel -->
+    <section class="carousel-wrapper">
+      <div class="carousel-container">
+        <div class="carousel-track" id="carouselTrack"></div>
+      </div>
     </section>
 
     <section class="info-section">
@@ -624,34 +646,41 @@
         }
       }
 
-      // Initialize the 3D Slider Carousel using the provided design
+      // Initialize the Carousel using the provided design, now with click event on each item
       async function initCarousel() {
         try {
           const res = await fetch("/api/projects");
           const result = await res.json();
           if (result.success) {
-            // Filter projects with valid image file URLs
             const projects = result.data.filter(
               (p) => p.fileUrl && /\.(png|jpg|jpeg|gif)$/i.test(p.fileUrl)
             );
-            const slider = document.getElementById("carouselTrack");
-            // Set the --quantity CSS variable to the number of projects
-            slider.style.setProperty("--quantity", projects.length);
-            // Create slider items using the sample design structure
-            const items = projects
+            const carouselTrack = document.getElementById("carouselTrack");
+            
+            // Duplicate items for seamless looping
+            const items = [...projects, ...projects]
               .map(
-                (proj, index) => `
-            <div class="item" style="--position: ${index + 1}">
-              <img src="/${proj.fileUrl}" alt="${proj.title}">
-            </div>
-          `
+                (proj) => `
+              <div class="carousel-item" onclick="viewProject('${proj._id}')">
+                <img src="/${proj.fileUrl}" alt="${proj.title}">
+                <div class="carousel-content">
+                  <h4>${proj.title}</h4>
+                  <p>${proj.domain.toUpperCase()}</p>
+                </div>
+              </div>
+            `
               )
               .join("");
-            slider.innerHTML = items;
+            carouselTrack.innerHTML = items;
           }
         } catch (error) {
           console.error("Carousel error:", error);
         }
+      }
+
+      // Function to redirect to the single project view
+      function viewProject(projectId) {
+        window.location.href = `/project/${projectId}`;
       }
 
       // Parallax & Scale Effect for UNICOLLAB Text

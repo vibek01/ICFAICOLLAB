@@ -3,7 +3,8 @@ const User = require("../models/user.model");
 
 exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    // In your user.controller.js getUsers function
+    const users = await User.find().select({ _id: 0, password: 0 });
     res.json({
       success: true,
       count: users.length,

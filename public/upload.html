@@ -298,7 +298,6 @@
         padding-left: 0.5rem;
         background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
         -webkit-background-clip: text;
-        /* -webkit-text-fill-color: transparent; */
       }
       form input[type="text"],
       form textarea,
@@ -365,7 +364,6 @@
       }
       .file-upload {
         position: relative;
-        /* overflow: hidden; */
       }
       .file-upload input[type="file"] {
         position: absolute;
@@ -462,31 +460,20 @@
   </head>
   <body>
     <nav class="navbar">
-      <button
-        class="menu-toggle"
-        aria-label="Toggle menu"
-        onclick="toggleMenu()"
-      >
+      <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
         <span class="hamburger"></span>
       </button>
-
       <div class="nav-links" id="navLinks">
         <a href="/" class="nav-link">Home</a>
         <a href="/projects" class="nav-link">View Projects</a>
         <a href="/ads" class="nav-link">Publish Announcements</a>
         <a href="/view-ads" class="nav-link">View Ads</a>
       </div>
-
       <div class="user-section">
         <div id="user-profile" class="user-profile" style="display: none">
           <div class="user-avatar">
             <img id="user-avatar-img" alt="User Avatar" />
-            <svg
-              id="default-avatar"
-              class="default-avatar"
-              viewBox="0 0 24 24"
-              style="display: none"
-            >
+            <svg id="default-avatar" class="default-avatar" viewBox="0 0 24 24" style="display: none">
               <path
                 d="M12 2C6.48 2 2 6.48 2 
                      12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 
@@ -519,35 +506,59 @@
               <div class="form-group">
                 <label for="domain">Select Your Domain</label>
                 <select id="domain" name="domain" required>
-                  <option value="" disabled selected>
-                    -- Choose Domain --
-                  </option>
-                  <option value="art">Art</option>
-                  <option value="coding">Coding</option>
-                  <option value="design">Design</option>
-                  <option value="ai">AI</option>
-                  <option value="cybersecurity">Cybersecurity</option>
-                  <option value="webdev">Web Development</option>
+                  <option value="" disabled selected>-- Choose Domain --</option>
+                  <option value="ART">Art</option>
+                  <option value="CODING">Coding</option>
+                  <option value="DESIGN">Design</option>
+                  <option value="AI">AI</option>
+                  <option value="CYBERSECURITY">Cybersecurity</option>
+                  <option value="WEB DEV">Web Development</option>
+                  <option value="MUSIC">Music</option>
+                  <option value="GAMING">Gaming</option>
+                  <option value="PHOTOGRAPHY">Photography</option>
+                  <option value="WRITING">Writing</option>
+                  <option value="IOT">Writing</option>
+                  <option value="BLOCKCHAIN">Blockchain</option>
+                  <option value="DATA SCIENCE">Data Science</option>
+                  <option value="ROBOTICS">Robotics</option>
+                  <option value="MOBILE APP DEV">Mobile App Development</option>
+                  <option value="AR/VR">AR/VR</option>
+                  <option value="GAME DEV">Game Development</option>
+                  <option value="DEVOPS">DevOps</option>
+                  <option value="EMBEDDED SYSTEMS">Embedded Systems</option>
+                  <option value="IOT">IoT</option>
+                  <option value="others">Others</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="project-title">Project Title</label>
-                <input
-                  type="text"
-                  id="project-title"
-                  name="project-title"
-                  required
-                />
+                <input type="text" id="project-title" name="project-title" required />
               </div>
 
               <div class="form-group">
                 <label for="project-description">Project Description</label>
-                <textarea
-                  id="project-description"
-                  name="project-description"
-                  required
-                ></textarea>
+                <textarea id="project-description" name="project-description" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="project-links">Project Links (separated by commas)</label>
+                <input
+                  type="text"
+                  id="project-links"
+                  name="project-links"
+                  placeholder="https://example.com, https://github.com/example"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="team-members">Team Members (separated by commas)</label>
+                <input
+                  type="text"
+                  id="team-members"
+                  name="team-members"
+                  placeholder="John Doe, Jane Doe"
+                />
               </div>
             </div>
             <div class="right-column">
@@ -555,10 +566,7 @@
                 <div class="file-upload">
                   <label class="file-upload-label">
                     <span>📁 Upload Project File</span>
-                    <small
-                      >(For Art: image or video; For Coding: code archive e.g.,
-                      ZIP)</small
-                    >
+                    <small>(For Art: image or video; For Coding: code archive e.g., ZIP)</small>
                     <span class="file-info" id="project-file-info"></span>
                     <input type="file" id="project-file" name="file" required />
                   </label>
@@ -596,17 +604,13 @@
           .getElementById("project-file")
           .addEventListener("change", function () {
             const infoSpan = document.getElementById("project-file-info");
-            infoSpan.textContent = this.files[0]
-              ? `Selected: ${this.files[0].name}`
-              : "";
+            infoSpan.textContent = this.files[0] ? `Selected: ${this.files[0].name}` : "";
           });
         document
           .getElementById("demo-video")
           .addEventListener("change", function () {
             const infoSpan = document.getElementById("demo-video-info");
-            infoSpan.textContent = this.files[0]
-              ? `Selected: ${this.files[0].name}`
-              : "";
+            infoSpan.textContent = this.files[0] ? `Selected: ${this.files[0].name}` : "";
           });
 
         // Load navbar user details

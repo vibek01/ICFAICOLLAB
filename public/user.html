@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>User Dashboard - Project Showcase</title>
+    <!-- Updated Font Awesome link (no integrity attribute) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
       :root {
         --primary-color: #1976d2;
@@ -12,10 +17,13 @@
         --light-color: #333333;
         --card-bg: #ffffff;
         --transition-speed: 0.3s;
-        --gradient: linear-gradient(45deg, #1976d2, #ff4081);
+        --gradient: linear-gradient(45deg, #1976d2, #86b582);
       }
 
-      /* ===== Enhanced Navbar ===== */
+      body{
+        background: linear-gradient(30deg, #ffffff, #3eec176c);
+      }
+      /* ===== NAVBAR ===== */
       .navbar {
         display: flex;
         justify-content: space-between;
@@ -26,20 +34,9 @@
         position: sticky;
         top: 0;
         z-index: 1000;
+        border-radius: 15px;
         border-bottom: 2px solid rgba(0, 0, 0, 0.1);
       }
-      /* Optional brand name/logo */
-      .brand {
-        font-weight: bold;
-        font-size: 1.5rem;
-        color: var(--light-color);
-      }
-      .brand a {
-        text-decoration: none;
-        color: var(--light-color);
-      }
-
-      /* Hamburger Menu Button */
       .menu-toggle {
         display: none;
         background: none;
@@ -52,7 +49,7 @@
         height: 2px;
         background-color: var(--light-color);
         position: relative;
-        transition: all 0.3s ease;
+        transition: all var(--transition-speed) ease;
         display: block;
       }
       .menu-toggle .hamburger::before,
@@ -63,7 +60,7 @@
         background-color: var(--light-color);
         position: absolute;
         left: 0;
-        transition: all 0.3s ease;
+        transition: all var(--transition-speed) ease;
       }
       .menu-toggle .hamburger::before {
         top: -8px;
@@ -71,11 +68,10 @@
       .menu-toggle .hamburger::after {
         top: 8px;
       }
-
       .nav-links {
         display: flex;
         gap: 2rem;
-        transition: transform 0.3s ease;
+        transition: transform var(--transition-speed) ease;
       }
       .nav-link {
         color: var(--light-color);
@@ -98,7 +94,6 @@
       .nav-link:hover::before {
         width: 100%;
       }
-
       .user-section {
         display: flex;
         align-items: center;
@@ -123,18 +118,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
       }
       .user-avatar img {
         width: 100%;
         height: 100%;
-        border-radius: 50%;
         object-fit: cover;
       }
+      /* Default profile icon using Font Awesome */
       .default-avatar {
-        width: 100%;
-        height: 100%;
-        padding: 8px;
-        fill: var(--light-color);
+        font-size: 2rem;
+        color: var(--light-color);
       }
       .user-name {
         font-weight: 600;
@@ -154,15 +148,7 @@
         color: var(--light-color);
       }
 
-      /* ===== Enhanced Body Styles ===== */
-      body {
-        font-family: "Segoe UI", sans-serif;
-        background: linear-gradient(30deg, #ffffff, #92ff7952);
-        color: var(--light-color);
-        min-height: 100vh;
-        margin: 0;
-        overflow-x: hidden;
-      }
+      /* ===== DASHBOARD CONTAINER ===== */
       .container {
         width: 90%;
         max-width: 1200px;
@@ -170,20 +156,15 @@
         padding: 20px;
         background: var(--card-bg);
         border-radius: 15px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
         box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
         animation: fadeIn 1s ease forwards;
       }
       @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+        from { opacity: 0; }
+        to { opacity: 1; }
       }
 
-      /* ===== Animated User Details ===== */
+      /* ===== USER DETAILS BOX ===== */
       .user-details-box {
         display: flex;
         align-items: center;
@@ -192,23 +173,25 @@
         padding: 20px;
         border-radius: 10px;
         margin-bottom: 30px;
-        /* Removed gradient border effects to match landing page style */
       }
-      .user-details-box img {
+      .profile-pic-container {
+        position: relative;
         width: 100px;
         height: 100px;
+      }
+      .profile-pic-container img,
+      .profile-pic-container i {
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--primary-color);
-        z-index: 1;
       }
       .user-details-info {
-        z-index: 1;
+        flex: 1;
       }
       .user-details-info h2 {
         font-size: 1.8rem;
         margin-bottom: 5px;
-        /* Apply gradient text */
         background: var(--gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -218,7 +201,7 @@
         color: var(--light-color);
       }
 
-      /* ===== Enhanced Content Grid ===== */
+      /* ===== CONTENT GRID ===== */
       .content-grid {
         display: flex;
         flex-wrap: wrap;
@@ -241,14 +224,9 @@
         animation: cardEntrance 0.6s ease forwards;
         opacity: 0;
       }
-      .box:nth-child(1) {
-        animation-delay: 0.2s;
-      }
-      .box:nth-child(2) {
-        animation-delay: 0.4s;
-      }
-      .box:nth-child(3) {
-        animation-delay: 0.6s;
+      @keyframes cardEntrance {
+        from { opacity: 0; transform: translateY(20px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
       }
       .box:hover {
         transform: translateY(-5px);
@@ -257,7 +235,6 @@
       .box h3 {
         margin-bottom: 15px;
         font-size: 1.4rem;
-        /* Apply gradient text for headings */
         background: var(--gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -274,71 +251,74 @@
         background: var(--gradient);
       }
 
-      /* ===== Enhanced List Items ===== */
-      .join-request-card,
-      .my-join-request {
+      /* ===== UPDATED PROJECTS DISPLAY SECTION (Left Panel) ===== */
+      .projects-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .project-card {
+        display: flex;
+        align-items: center;
         background: var(--card-bg);
-        border-radius: 6px;
-        padding: 12px;
-        margin-bottom: 10px;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        transition: transform var(--transition-speed) ease;
+      }
+      .project-card:hover {
+        transform: translateY(-5px);
+      }
+      .project-thumbnail {
+        flex: 0 0 100px;
+        height: 100px;
+        margin-right: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f5f5f5;
+      }
+      .project-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .project-details {
+        flex: 1;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-left: 4px solid var(--primary-color);
-        transition: all var(--transition-speed) ease;
       }
-      .join-request-card:hover {
-        border-left-color: var(--secondary-color);
-        transform: translateX(5px);
-      }
-      .join-request-buttons {
+      .project-info {
         display: flex;
-        gap: 8px;
+        flex-direction: column;
+        gap: 5px;
       }
-      .action-btn {
-        cursor: pointer;
+      .project-info h4 {
+        margin: 0;
+        font-size: 1.2rem;
         color: var(--light-color);
+      }
+      .project-info p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #555;
+      }
+      .more-btn {
         background: var(--gradient);
+        color: var(--light-color);
         border: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-weight: 500;
-        transition: all var(--transition-speed) ease;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background var(--transition-speed) ease;
       }
-      .action-btn:hover {
-        opacity: 0.9;
-        transform: translateY(-1px);
-      }
-
-      /* ===== Animations ===== */
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      @keyframes cardEntrance {
-        from {
-          opacity: 0;
-          transform: translateY(20px) scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-      @keyframes rotateBorder {
-        100% {
-          transform: rotate(360deg);
-        }
+      .more-btn:hover {
+        --gradient: linear-gradient(145deg, #1976d2, #86b582);
       }
 
-      /* ===== Responsive Design ===== */
-      @media (max-width: 768px) {
+      /* ===== RESPONSIVE DESIGN ===== */
+      @media (max-width: 800px) {
         .navbar {
           flex-wrap: wrap;
           gap: 1rem;
@@ -361,9 +341,6 @@
         .nav-links.active {
           transform: translateY(0);
         }
-        .user-section {
-          order: -1;
-        }
         .user-details-box {
           flex-direction: column;
           text-align: center;
@@ -381,15 +358,9 @@
   <body>
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar">
-      <!-- Hamburger Menu Button for Mobile -->
-      <button
-        class="menu-toggle"
-        aria-label="Toggle menu"
-        onclick="toggleMenu()"
-      >
+      <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
         <span class="hamburger"></span>
       </button>
-
       <div class="nav-links" id="navLinks">
         <a href="/" class="nav-link">Home</a>
         <a href="/upload" class="nav-link">Add Project</a>
@@ -401,16 +372,7 @@
         <div id="user-profile" class="user-profile">
           <div class="user-avatar">
             <img id="user-avatar-img" alt="User Avatar" />
-            <svg
-              id="default-avatar"
-              class="default-avatar"
-              viewBox="0 0 24 24"
-              style="display: none"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
-              />
-            </svg>
+            <i id="default-avatar" class="fas fa-user default-avatar" style="display: none;"></i>
           </div>
           <div class="user-name" id="user-name"></div>
         </div>
@@ -422,7 +384,10 @@
     <div class="container">
       <!-- USER DETAILS -->
       <div class="user-details-box">
-        <img alt="User Profile Picture" id="profilePic" />
+        <div class="profile-pic-container">
+          <img alt="User Profile Picture" id="profilePic" />
+          <i id="defaultProfileIcon" class="fas fa-user default-avatar" style="display: none;"></i>
+        </div>
         <div class="user-details-info">
           <h2 id="userName">Loading...</h2>
           <p id="userEmail">Loading...</p>
@@ -435,10 +400,8 @@
         <div class="left-panel">
           <div class="box">
             <h3>My Projects</h3>
-            <div id="projectsContent">
-              <p>
-                No projects to display yet. Start by uploading a new project!
-              </p>
+            <div class="projects-list" id="projectsContent">
+              <p>No projects to display yet. Start by uploading a new project!</p>
             </div>
           </div>
         </div>
@@ -447,9 +410,7 @@
           <div class="box">
             <h3>My Team Ads</h3>
             <div id="adsContent">
-              <p>
-                No team ads published yet. Create one to start collaborating!
-              </p>
+              <p>No team ads published yet. Create one to start collaborating!</p>
             </div>
           </div>
 
@@ -480,21 +441,19 @@
       // Fetch user data from the backend
       async function fetchUserData() {
         try {
-          const response = await fetch("/api/users/me", {
-            credentials: "include",
-          });
+          const response = await fetch("/api/users/me", { credentials: "include" });
           const data = await response.json();
           if (data.success) {
             const user = data.data;
             document.getElementById("userName").textContent = user.name;
-            document.getElementById(
-              "userEmail"
-            ).textContent = `Email: ${user.email}`;
-            document.getElementById(
-              "userDomain"
-            ).textContent = `Domain: ${user.domain}`;
+            document.getElementById("userEmail").textContent = `Email: ${user.email}`;
+            document.getElementById("userDomain").textContent = `Domain: ${user.domain}`;
             if (user.profilePic) {
               document.getElementById("profilePic").src = user.profilePic;
+              document.getElementById("defaultProfileIcon").style.display = "none";
+            } else {
+              document.getElementById("profilePic").style.display = "none";
+              document.getElementById("defaultProfileIcon").style.display = "block";
             }
             document.getElementById("user-name").textContent = user.name;
             const avatarImg = document.getElementById("user-avatar-img");
@@ -514,40 +473,36 @@
         }
       }
 
-      // Fetch user projects and display them
+      // Fetch user projects and display them (updated project display section)
       async function fetchUserProjects() {
         try {
-          const response = await fetch("/api/projects/my-projects", {
-            credentials: "include",
-          });
+          const response = await fetch("/api/projects/my-projects", { credentials: "include" });
           const data = await response.json();
           const projectsContent = document.getElementById("projectsContent");
           if (data.success) {
             if (data.data.length > 0) {
               projectsContent.innerHTML = data.data
-                .map(
-                  (project) => `
-              <div style="margin-bottom: 15px;">
-                ${
-                  project.fileUrl &&
-                  /\.(png|jpg|jpeg|gif)$/i.test(project.fileUrl)
-                    ? `<img src="/${project.fileUrl}" alt="Project Thumbnail" style="width:100px; height:100px; object-fit:cover; margin-bottom:5px;">`
-                    : ""
-                }
-                <h4>${project.title}</h4>
-                <p>${project.description}</p>
-                <p><strong>Created by:</strong> ${
-                  project.userId && project.userId.name
-                    ? project.userId.name
-                    : "Unknown"
-                }</p>
-              </div>
-            `
-                )
+                .map((project) => `
+                  <div class="project-card">
+                    <div class="project-thumbnail">
+                      ${
+                        project.fileUrl && /\.(png|jpg|jpeg|gif)$/i.test(project.fileUrl)
+                          ? `<img src="/${project.fileUrl}" alt="Project Thumbnail">`
+                          : `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#eaeaea;">No Image</div>`
+                      }
+                    </div>
+                    <div class="project-details">
+                      <div class="project-info">
+                        <h4>${project.title}</h4>
+                        <p>${project.domain}</p>
+                      </div>
+                      <button class="more-btn" onclick="viewProject('${project._id}')">More</button>
+                    </div>
+                  </div>
+                `)
                 .join("");
             } else {
-              projectsContent.innerHTML =
-                "<p>No projects to display yet. Start by uploading a new project!</p>";
+              projectsContent.innerHTML = "<p>No projects to display yet. Start by uploading a new project!</p>";
             }
           } else {
             alert("Error fetching projects");
@@ -557,35 +512,34 @@
         }
       }
 
+      function viewProject(projectId) {
+        window.location.href = `/project/${projectId}`;
+      }
+
       // Fetch ads created by the user (My Team Ads)
       async function fetchUserAds() {
         try {
-          const response = await fetch("/api/ads/my-ads", {
-            credentials: "include",
-          });
+          const response = await fetch("/api/ads/my-ads", { credentials: "include" });
           const data = await response.json();
           const adsContent = document.getElementById("adsContent");
           if (data.success) {
             if (data.data.length > 0) {
               adsContent.innerHTML = data.data
-                .map(
-                  (ad) => `
-              <div style="margin-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px;">
-                <h4>${ad.title || "Untitled"}</h4>
-                <p><strong>Domain:</strong> ${ad.domain || "N/A"}</p>
-                <p>${ad.description || "No description provided."}</p>
-                <p class="ad-status"><strong>Join Requests Status:</strong> ${
-                  ad.joinRequests && ad.joinRequests.length > 0
-                    ? ad.joinRequests.map((jr) => jr.status).join(", ")
-                    : "No join requests yet"
-                }</p>
-              </div>
-            `
-                )
+                .map((ad) => `
+                  <div style="margin-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px;">
+                    <h4>${ad.title || "Untitled"}</h4>
+                    <p><strong>Domain:</strong> ${ad.domain || "N/A"}</p>
+                    <p>${ad.description || "No description provided."}</p>
+                    <p class="ad-status"><strong>Join Requests Status:</strong> ${
+                      ad.joinRequests && ad.joinRequests.length > 0
+                        ? ad.joinRequests.map((jr) => jr.status).join(", ")
+                        : "No join requests yet"
+                    }</p>
+                  </div>
+                `)
                 .join("");
             } else {
-              adsContent.innerHTML =
-                "<p>No team ads published yet. Create one to start collaborating!</p>";
+              adsContent.innerHTML = "<p>No team ads published yet. Create one to start collaborating!</p>";
             }
           } else {
             alert("Error fetching ads");
@@ -598,13 +552,9 @@
       // Fetch join requests sent by the user (My Join Requests for applicants)
       async function fetchMyJoinRequests() {
         try {
-          const response = await fetch("/api/ads/my-join-requests-applicant", {
-            credentials: "include",
-          });
+          const response = await fetch("/api/ads/my-join-requests-applicant", { credentials: "include" });
           const data = await response.json();
-          const myJoinRequestsContent = document.getElementById(
-            "myJoinRequestsContent"
-          );
+          const myJoinRequestsContent = document.getElementById("myJoinRequestsContent");
           if (data.success) {
             if (data.data.length > 0) {
               let html = "";
@@ -612,24 +562,20 @@
                 if (item.joinRequests.length > 0) {
                   item.joinRequests.forEach((jr) => {
                     html += `
-                    <div class="my-join-request">
-                      <div>
-                        <h4>${item.title}</h4>
-                        <p><strong>Ad Owner:</strong> ${
-                          item.owner ? item.owner.name : "Unknown"
-                        }</p>
-                        <p><strong>Status:</strong> ${jr.status}</p>
+                      <div class="my-join-request">
+                        <div>
+                          <h4>${item.title}</h4>
+                          <p><strong>Ad Owner:</strong> ${item.owner ? item.owner.name : "Unknown"}</p>
+                          <p><strong>Status:</strong> ${jr.status}</p>
+                        </div>
                       </div>
-                    </div>
-                  `;
+                    `;
                   });
                 }
               });
-              myJoinRequestsContent.innerHTML =
-                html || "<p>No join requests sent yet.</p>";
+              myJoinRequestsContent.innerHTML = html || "<p>No join requests sent yet.</p>";
             } else {
-              myJoinRequestsContent.innerHTML =
-                "<p>No join requests sent yet.</p>";
+              myJoinRequestsContent.innerHTML = "<p>No join requests sent yet.</p>";
             }
           } else {
             alert("Error fetching your join requests: " + data.error);
@@ -642,13 +588,9 @@
       // Fetch join requests received (for ads the user created)
       async function fetchJoinRequests() {
         try {
-          const response = await fetch("/api/ads/my-join-requests", {
-            credentials: "include",
-          });
+          const response = await fetch("/api/ads/my-join-requests", { credentials: "include" });
           const data = await response.json();
-          const joinRequestsContent = document.getElementById(
-            "joinRequestsContent"
-          );
+          const joinRequestsContent = document.getElementById("joinRequestsContent");
           if (data.success) {
             if (data.data.length > 0) {
               let html = "";
@@ -657,37 +599,35 @@
                   let requestsHtml = "";
                   item.joinRequests.forEach((jr) => {
                     requestsHtml += `
-                    <div class="join-request-card">
-                      <div class="join-request-info">
-                        <p>${jr.user.name} (${jr.user.email})</p>
-                        <p><strong>Status:</strong> ${jr.status}</p>
-                      </div>
-                      <div class="join-request-buttons">
-                        ${
-                          jr.status === "pending"
-                            ? `
+                      <div class="join-request-card">
+                        <div class="join-request-info">
+                          <p>${jr.user.name} (${jr.user.email})</p>
+                          <p><strong>Status:</strong> ${jr.status}</p>
+                        </div>
+                        <div class="join-request-buttons">
+                          ${
+                            jr.status === "pending"
+                              ? `
                           <button class="action-btn" onclick="acceptJoinRequest('${item.adId}', '${jr.user._id}')">Accept</button>
                           <button class="action-btn" onclick="declineJoinRequest('${item.adId}', '${jr.user._id}')">Decline</button>
                         `
-                            : ""
-                        }
+                              : ""
+                          }
+                        </div>
                       </div>
-                    </div>
-                  `;
+                    `;
                   });
                   html += `
-                  <div class="ad-join-request">
-                    <h4>${item.title}</h4>
-                    ${requestsHtml}
-                  </div>
-                `;
+                    <div class="ad-join-request">
+                      <h4>${item.title}</h4>
+                      ${requestsHtml}
+                    </div>
+                  `;
                 }
               });
-              joinRequestsContent.innerHTML =
-                html || "<p>No join requests received yet.</p>";
+              joinRequestsContent.innerHTML = html || "<p>No join requests received yet.</p>";
             } else {
-              joinRequestsContent.innerHTML =
-                "<p>No join requests received yet.</p>";
+              joinRequestsContent.innerHTML = "<p>No join requests received yet.</p>";
             }
           } else {
             alert("Error fetching join requests: " + data.error);
@@ -700,14 +640,11 @@
       // Accept a join request (for received join requests)
       async function acceptJoinRequest(adId, requesterId) {
         try {
-          const response = await fetch(
-            `/api/ads/${adId}/join/${requesterId}/accept`,
-            {
-              method: "POST",
-              credentials: "include",
-              headers: { "Content-Type": "application/json" },
-            }
-          );
+          const response = await fetch(`/api/ads/${adId}/join/${requesterId}/accept`, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+          });
           const result = await response.json();
           if (result.success) {
             alert("Join request accepted!");
@@ -725,14 +662,11 @@
       // Decline a join request (for received join requests)
       async function declineJoinRequest(adId, requesterId) {
         try {
-          const response = await fetch(
-            `/api/ads/${adId}/join/${requesterId}/decline`,
-            {
-              method: "POST",
-              credentials: "include",
-              headers: { "Content-Type": "application/json" },
-            }
-          );
+          const response = await fetch(`/api/ads/${adId}/join/${requesterId}/decline`, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+          });
           const result = await response.json();
           if (result.success) {
             alert("Join request declined!");
@@ -748,25 +682,21 @@
       }
 
       // Logout functionality
-      document
-        .getElementById("logoutBtn")
-        .addEventListener("click", async (e) => {
-          e.preventDefault();
-          try {
-            const response = await fetch("/api/auth/logout", {
-              credentials: "include",
-            });
-            const result = await response.json();
-            if (result.success) {
-              alert("Logged out successfully");
-              window.location.href = "/";
-            } else {
-              alert("Logout failed");
-            }
-          } catch (error) {
-            alert("Error during logout: " + error.message);
+      document.getElementById("logoutBtn").addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          const response = await fetch("/api/auth/logout", { credentials: "include" });
+          const result = await response.json();
+          if (result.success) {
+            alert("Logged out successfully");
+            window.location.href = "/";
+          } else {
+            alert("Logout failed");
           }
-        });
+        } catch (error) {
+          alert("Error during logout: " + error.message);
+        }
+      });
 
       // Initialize the dashboard
       document.addEventListener("DOMContentLoaded", () => {
@@ -775,11 +705,9 @@
         fetchUserAds();
         fetchJoinRequests();
         fetchMyJoinRequests();
-        document
-          .getElementById("user-profile")
-          .addEventListener("click", () => {
-            window.location.href = "/me";
-          });
+        document.getElementById("user-profile").addEventListener("click", () => {
+          window.location.href = "/me";
+        });
       });
     </script>
   </body>

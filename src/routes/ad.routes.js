@@ -16,7 +16,7 @@ const {
 const router = express.Router();
 
 router.post('/', protect, upload.none(), createAd);
-router.get('/', getAds);
+router.get('/', protect, getAds);
 router.get('/my-ads', protect, getMyAds);
 // Route to send a join request to a specific ad
 router.post('/:adId/join', protect, sendJoinRequest);
