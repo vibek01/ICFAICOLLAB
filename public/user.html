@@ -685,7 +685,10 @@
       document.getElementById("logoutBtn").addEventListener("click", async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch("/api/auth/logout", { credentials: "include" });
+          const response = await fetch("/api/auth/logout", {
+            method: "POST",
+            credentials: "include"
+          });
           const result = await response.json();
           if (result.success) {
             alert("Logged out successfully");
