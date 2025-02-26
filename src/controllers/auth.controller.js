@@ -41,9 +41,11 @@ exports.login = async (req, res) => {
   }
 };
 
+// auth.controller.js (updated logout)
 exports.logout = (req, res) => {
-  // Clear the cookie with the same options
-  res.clearCookie('token', {
+  // Force the cookie to expire immediately
+  res.cookie('token', '', {
+    expires: new Date(0),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
