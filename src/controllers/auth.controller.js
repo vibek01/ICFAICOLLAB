@@ -13,32 +13,40 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+      return res
+        .status(401)
+        .json({ success: false, message: 'Invalid email or password' });
     }
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+      return res
+        .status(401)
+        .json({ success: false, message: 'Invalid email or password' });
     }
     // Generate JWT token
     const token = generateToken(user);
-    // Set token in an HTTP-only cookie with additional options
+    // Set token in an HTTP-only cookie with explicit path
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax' // Ensures cookie is sent in a controlled manner
+      sameSite: 'lax',
+      path: '/'
     });
     return res.json({ success: true, message: 'Logged in successfully' });
   } catch (err) {
-    return res.status(500).json({ success: false, message: err.message });
+    return res
+      .status(500)
+      .json({ success: false, message: err.message });
   }
 };
 
 exports.logout = (req, res) => {
-  // Clear the cookie using the same options to ensure it is properly removed
+  // Clear the cookie with the same options, including the path
   res.clearCookie('token', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax'
+    sameSite: 'lax',
+    path: '/'
   });
   res.json({ success: true, message: 'Logged out successfully' });
 };
