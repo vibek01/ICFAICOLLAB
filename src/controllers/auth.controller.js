@@ -25,13 +25,13 @@ exports.login = async (req, res) => {
     }
     // Generate JWT token
     const token = generateToken(user);
-    // Set token in an HTTP-only cookie with explicit options (including domain if set)
+    // Set cookie with explicit options but without forcing the domain.
+    // Let the cookie default to the current host (icfaicollab.vercel.app)
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      path: '/',
-      domain: process.env.COOKIE_DOMAIN || undefined
+      path: '/'
     });
     return res.json({ success: true, message: 'Logged in successfully' });
   } catch (err) {
@@ -41,16 +41,14 @@ exports.login = async (req, res) => {
   }
 };
 
-// auth.controller.js (updated logout)
 exports.logout = (req, res) => {
-  // Force the cookie to expire immediately
+  // Force the cookie to expire immediately by setting an expiration date in the past.
   res.cookie('token', '', {
-    expires: new Date(0),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    domain: process.env.COOKIE_DOMAIN || undefined
+    expires: new Date(0)
   });
   res.json({ success: true, message: 'Logged out successfully' });
 };
