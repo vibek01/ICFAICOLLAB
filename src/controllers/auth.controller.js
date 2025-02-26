@@ -25,12 +25,13 @@ exports.login = async (req, res) => {
     }
     // Generate JWT token
     const token = generateToken(user);
-    // Set token in an HTTP-only cookie with explicit path
+    // Set token in an HTTP-only cookie with explicit options (including domain if set)
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      path: '/'
+      path: '/',
+      domain: process.env.COOKIE_DOMAIN || undefined
     });
     return res.json({ success: true, message: 'Logged in successfully' });
   } catch (err) {
@@ -41,12 +42,13 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  // Clear the cookie with the same options, including the path
+  // Clear the cookie with the same options
   res.clearCookie('token', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    path: '/'
+    path: '/',
+    domain: process.env.COOKIE_DOMAIN || undefined
   });
   res.json({ success: true, message: 'Logged out successfully' });
 };
