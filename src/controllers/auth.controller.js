@@ -1,3 +1,4 @@
+// auth.controller.js
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 
@@ -20,10 +21,11 @@ exports.login = async (req, res) => {
     }
     // Generate JWT token
     const token = generateToken(user);
-    // Set token in an HTTP-only cookie
+    // Set token in an HTTP-only cookie with additional options
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production'
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax' // Ensures cookie is sent in a controlled manner
     });
     return res.json({ success: true, message: 'Logged in successfully' });
   } catch (err) {
@@ -32,6 +34,11 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie('token');
+  // Clear the cookie using the same options to ensure it is properly removed
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax'
+  });
   res.json({ success: true, message: 'Logged out successfully' });
 };
