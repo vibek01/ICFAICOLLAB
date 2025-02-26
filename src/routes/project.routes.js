@@ -2,23 +2,17 @@
 const express = require("express");
 const multer = require("multer");
 const { protect } = require("../middlewares/auth.middleware");
-const { uploadProject, getProjects, getMyProjects, getProjectById } = require("../controllers/project.controller");
+const {
+  uploadProject,
+  getProjects,
+  getMyProjects,
+  getProjectById,
+} = require("../controllers/project.controller");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    if (file.mimetype.startsWith("image/")) {
-      cb(null, Date.now() + ".png");
-    } else {
-      const ext = file.originalname.split(".").pop();
-      cb(null, Date.now() + "." + ext);
-    }
-  }
-});
-
+// Use memory storage so the file is available in req.file.buffer
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
+
 const router = express.Router();
 
 router.get("/", getProjects);

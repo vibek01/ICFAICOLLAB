@@ -1,0 +1,43 @@
+API - COPY/
+├── node_modules/                  # (Dependencies installed by npm)
+├── public/
+│   ├── about.html
+│   ├── all-user.html
+│   ├── login.html
+│   ├── signup.html
+│   ├── upload.html
+│   ├── user.html
+│   ├── view-ads.html
+│   └── view-project.html
+│   └── view-projects.html
+│   └── ads.html
+│   └── landing.html
+|   
+├── config/
+│   ├── db.js
+│   └── prompt.txt
+├── src/
+│   ├── controllers/
+│   │   ├── ad.controller.js
+│   │   ├── auth.controller.js
+│   │   ├── project.controller.js
+│   │   └── user.controller.js
+│   ├── middlewares/
+│   │   ├── auth.middleware.js
+│   │   └── error.middleware.js
+│   ├── models/
+│   │   ├── ad.model.js
+│   │   ├── project.model.js
+│   │   └── user.model.js
+│   └── routes/
+│       ├── ad.routes.js
+│       ├── auth.routes.js
+│       ├── index.js
+│       ├── project.routes.js
+│       └── user.routes.js
+├── uploads/
+├── .env
+├── .gitignore
+├── package-lock.json
+├── package.json
+└── server.js

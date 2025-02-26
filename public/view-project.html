@@ -442,7 +442,7 @@
 
             // Set project image if available
             if (project.fileUrl && /\.(png|jpg|jpeg|gif)$/i.test(project.fileUrl)) {
-              projectImage.src = `/${project.fileUrl}`;
+              projectImage.src = `${project.fileUrl}`;
             } else {
               projectImage.parentElement.style.display = "none";
             }
