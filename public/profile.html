@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>User Dashboard - Project Showcase</title>
+    <title>User Profile - Project Showcase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Font Awesome Icons -->
     <link
@@ -10,7 +10,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <style>
-      /* ------------------------------ 
+      /* ------------------------------
          BASIC RESET & VARIABLES
       ------------------------------ */
       * {
@@ -26,7 +26,6 @@
         --card-bg: #ffffff;
         --gradient: linear-gradient(45deg, #1976d2, #86b582);
         --transition-speed: 0.3s;
-        /* Modal border gradient as requested */
         --modal-border-gradient: linear-gradient(to right, #dfe0e2, #bde7b9), linear-gradient(#fff, #fff);
       }
       body {
@@ -41,8 +40,9 @@
         text-decoration: none;
         color: inherit;
       }
+
       /* ------------------------------
-         NAVBAR (updated like upload.html)
+         NAVBAR
       ------------------------------ */
       .navbar {
         display: flex;
@@ -90,7 +90,7 @@
       .nav-links {
         display: flex;
         gap: 2rem;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease;
       }
       .nav-link {
         color: var(--text-color);
@@ -123,7 +123,7 @@
         align-items: center;
         gap: 1rem;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease;
       }
       .user-profile:hover {
         transform: translateY(-2px);
@@ -154,7 +154,7 @@
         font-weight: 600;
         color: var(--text-color);
       }
-      .logout-btn {
+      #logoutBtn {
         background: transparent;
         color: var(--secondary-color);
         border: 1px solid var(--secondary-color);
@@ -162,7 +162,7 @@
         border-radius: 8px;
         transition: all 0.3s ease;
       }
-      .logout-btn:hover {
+      #logoutBtn:hover {
         background: var(--secondary-color);
         color: var(--bg-color);
       }
@@ -185,6 +185,7 @@
           transform: translateY(0);
         }
       }
+
       /* ------------------------------
          COVER BANNER / HEADER
       ------------------------------ */
@@ -226,6 +227,7 @@
         font-size: 1rem;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
       }
+
       /* ------------------------------
          PROFILE SECTION BELOW COVER
       ------------------------------ */
@@ -237,12 +239,13 @@
         flex: 1;
         padding-bottom: 200px;
       }
+      /* Larger image with transparent border */
       .profile-avatar {
         position: absolute;
         top: -60px;
         left: 0;
-        width: 150px;
-        height: 150px;
+        width: 150px; /* increased size */
+        height: 150px; /* increased size */
         border-radius: 50%;
         overflow: hidden;
         background: #ccc;
@@ -255,22 +258,19 @@
         object-fit: cover;
       }
       .profile-info {
-        margin-left: 170px;
+        margin-left: 170px; /* to accommodate the larger avatar */
         padding-top: 1rem;
       }
+      /* Larger user name with gradient */
       .profile-info h2 {
-        font-size: 2.2rem;
-        margin-bottom: 0.6rem;
+        font-size: 2.5rem; /* bigger user name */
+        margin-bottom: 0.2rem;
         background: var(--gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: 700;
       }
-      #userUsernameDisplay {
-        font-size: 0.8rem;
-        color: #666;
-        margin-top: 0.3rem;
-      }
+      /* Bold and larger domain tags */
       .profile-info .user-subtitle {
         font-weight: bold;
         font-size: 1.2rem;
@@ -325,6 +325,7 @@
         color: #777;
         margin-bottom: 1rem;
       }
+      /* If you decide to show action-buttons in the public profile, they appear here */
       .action-buttons {
         display: flex;
         gap: 0.5rem;
@@ -353,9 +354,6 @@
         gap: 1.5rem;
         border-bottom: 2px solid #ddd;
         margin-bottom: 1rem;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
       }
       .tabs-menu a {
         position: relative;
@@ -363,7 +361,6 @@
         font-weight: 600;
         color: #666;
         cursor: pointer;
-        white-space: nowrap;
       }
       .tabs-menu a.active {
         color: var(--primary-color);
@@ -386,7 +383,7 @@
       }
 
       /* ------------------------------
-         PROJECTS GRID & ADS GRID
+         PROJECTS GRID (PUBLIC VIEW)
       ------------------------------ */
       .container {
         max-width: 1400px;
@@ -503,112 +500,7 @@
       .card-actions button:hover {
         background: #155fa8;
       }
-      /* ------------------------------
-         ADS GRID (Light background color)
-      ------------------------------ */
-      .ads-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 15px;
-      }
-      .ads-card {
-        background: #f0f9ff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        padding: 10px;
-        text-align: center;
-        min-height: 100px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .ads-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      }
-      .ads-card h4 {
-        font-size: 1rem;
-        font-weight: bold;
-        margin: 0;
-      }
-      .ads-card p {
-        font-size: 0.85rem;
-        margin: 5px 0 0;
-        color: #555;
-      }
-      /* ------------------------------
-         JOIN REQUESTS CONTAINER
-      ------------------------------ */
-      .join-requests-container {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-      }
-      .join-requests-received,
-      .my-join-requests {
-        flex: 1;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        padding: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .join-requests-received:hover,
-      .my-join-requests:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-      }
-      .join-requests-received h3,
-      .my-join-requests h3 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        background: var(--gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .ad-join-request {
-        margin-bottom: 1rem;
-        border: 1px solid #eee;
-        border-radius: 8px;
-        padding: 0.5rem;
-        transition: box-shadow 0.3s;
-      }
-      .ad-join-request:hover {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      }
-      .ad-join-request h4 {
-        margin-bottom: 5px;
-        font-size: 1rem;
-        font-weight: bold;
-      }
-      .join-request-card {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 5px 0;
-        border-top: 1px solid #eee;
-      }
-      .join-request-card:first-child {
-        border-top: none;
-      }
-      .join-request-info p {
-        margin: 0;
-        font-size: 0.9rem;
-      }
-      .join-request-buttons button {
-        background: var(--gradient);
-        border: none;
-        color: #fff;
-        padding: 0.3rem 0.6rem;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-left: 5px;
-        transition: background 0.3s;
-      }
-      .join-request-buttons button:hover {
-        background: #0d47a1;
-      }
+
       /* ------------------------------
          FOOTER
       ------------------------------ */
@@ -623,8 +515,9 @@
         color: #666;
         font-size: 0.9rem;
       }
+
       /* ------------------------------
-         MODAL ALERT STYLES (matching signup and login)
+         MODAL ALERT STYLES
       ------------------------------ */
       .modal-overlay {
         position: fixed;
@@ -672,9 +565,15 @@
         animation: iconBounce 0.6s ease, shake 0.6s ease;
       }
       @keyframes iconBounce {
-        0% { transform: scale(0); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
       }
       @keyframes shake {
         0% { transform: translateX(0); }
@@ -698,45 +597,56 @@
         .profile-section {
           width: 95%;
           padding-bottom: 150px;
-          text-align: center;
         }
-        /* For mobile devices, center and enlarge the profile avatar,
-           overlapping the cover banner, with a subtle glassmorphism effect */
         .profile-avatar {
           position: relative;
-          top: 10px;
-          margin: -80px auto 1rem;
-          width: 200px;
-          height: 200px;
-          border-radius: 50%;
-          overflow: hidden;
-          border: 5px solid rgba(255, 255, 255, 0.8);
-          background: rgba(255, 255, 255, 0.3);
-          backdrop-filter: blur(10px);
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+          top: 0;
+          margin: 0 auto;
+          width: 120px;
+          height: 120px;
+          border-width: 4px;
         }
         .profile-info {
           margin-left: 0;
           padding-top: 1rem;
           text-align: center;
         }
-        /* Optionally, adjust font sizes in the profile details on mobile */
-        .profile-info h2 {
-          font-size: 2.5rem;
-        }
-        .profile-info .user-subtitle,
-        .profile-info .user-bio,
-        .location {
-          font-size: 1.1rem;
-        }
+        /* Center skill tags on mobile */
         .skill-tags {
           justify-content: center;
+        }
+        .projects-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          padding: 20px;
+        }
+      }
+      @media (max-width: 480px) {
+        .cover-container {
+          height: 200px;
+        }
+        .cover-text h1 {
+          font-size: 1.5rem;
+        }
+        .cover-text p {
+          font-size: 0.9rem;
+        }
+        .profile-avatar {
+          width: 100px;
+          height: 100px;
+          border-width: 3px;
+        }
+        .profile-info h2 {
+          font-size: 2rem;
+        }
+        .profile-info .user-subtitle {
+          font-size: 1rem;
         }
       }
     </style>
   </head>
   <body>
-    <!-- ========== NAVBAR (updated like upload.html) ========== -->
+    <!-- ========== NAVBAR ========== -->
     <nav class="navbar">
       <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
         <span class="hamburger"></span>
@@ -747,18 +657,12 @@
         <a href="/projects" class="nav-link">View Projects</a>
         <a href="/ads" class="nav-link">Publish Announcements</a>
         <a href="/view-ads" class="nav-link">View Ads</a>
-        <a href="/settings" class="nav-link">Settings</a>
       </div>
       <div class="user-section">
         <div id="user-profile" class="user-profile" style="display: none">
           <div class="user-avatar">
             <img id="user-avatar-img" alt="User Avatar" />
-            <svg
-              id="default-avatar"
-              class="default-avatar"
-              viewBox="0 0 24 24"
-              style="display: none"
-            >
+            <svg id="default-avatar" class="default-avatar" viewBox="0 0 24 24" style="display: none">
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 
                    10 10 10 10-4.48 10-10S17.52 2 12 
@@ -766,7 +670,8 @@
                    3-3-1.34-3-3 1.34-3 3-3zm0 
                    14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 
                    4-3.08 6-3.08 1.99 0 5.97 1.09 6 
-                   3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                   3.08-1.29 1.94-3.5 3.22-6 
+                   3.22z"
               />
             </svg>
           </div>
@@ -793,63 +698,35 @@
       </div>
       <div class="profile-info">
         <h2 id="userNameDisplay">N/A</h2>
-        <p id="userUsernameDisplay" style="font-size: 0.8rem; color: #666; margin-top: 0.3rem;">username : N/A</p>
         <p class="user-subtitle" id="userSubtitle">No domain info</p>
         <p class="user-bio" id="userBio">No bio available</p>
         <div class="skill-tags" id="skillTags">
           <!-- Skill tags will be inserted dynamically -->
         </div>
         <p class="location" id="userLocation">N/A</p>
-        <div class="action-buttons">
+        <!-- Action buttons (hidden by default for public profiles, can be shown if needed) -->
+        <div class="action-buttons" id="publicActionButtons" style="display:none;">
           <button class="action-btn publish" onclick="window.location.href='/upload'">Publish Work</button>
           <button class="action-btn education" onclick="window.location.href='/education'">Add Education</button>
           <button class="action-btn experience" onclick="window.location.href='/experience'">Add Experience</button>
           <button class="action-btn achievement" onclick="window.location.href='/achievement'">Add Achievement</button>
         </div>
 
-        <!-- Tabs Menu -->
+        <!-- Tabs Menu (for public profile, typically just Projects) -->
         <div class="tabs-menu">
           <a id="projectsTabBtn" class="active" onclick="showTab('projectsTab')">Projects</a>
-          <a id="joinRequestsTabBtn" onclick="showTab('joinRequestsTab')">Join Requests</a>
-          <a id="adsTabBtn" onclick="showTab('adsTab')">My Ads</a>
         </div>
 
         <!-- Tab Contents -->
-        <!-- Projects Tab -->
         <div class="tab-content active" id="projectsTab">
           <div class="container">
             <header>
-              <h1>My Projects</h1>
-              <p>Manage and showcase your personal creations</p>
+              <h1 id="profileProjectsTitle">Projects</h1>
+              <p>View this user's projects</p>
             </header>
             <div class="projects-grid" id="projectsGrid">
               <!-- Project cards loaded dynamically -->
             </div>
-          </div>
-        </div>
-
-        <!-- Join Requests Tab -->
-        <div class="tab-content" id="joinRequestsTab">
-          <div class="join-requests-container">
-            <div class="join-requests-received">
-              <h3>Join Requests Received</h3>
-              <div id="joinRequestsContent">
-                <p>No join requests received yet.</p>
-              </div>
-            </div>
-            <div class="my-join-requests">
-              <h3>My Join Requests</h3>
-              <div id="myJoinRequestsContent">
-                <p>No join requests sent yet.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- My Ads Tab -->
-        <div class="tab-content" id="adsTab">
-          <div class="ads-grid" id="adsGrid">
-            <!-- Ad cards loaded dynamically -->
           </div>
         </div>
       </div>
@@ -860,40 +737,38 @@
       <p>© 2023 Project Showcase. All rights reserved.</p>
     </footer>
 
-    <!-- ========== MODAL ALERT CONTAINER ========== -->
+    <!-- ========== MODAL ALERT CONTAINER (for messages) ========== -->
     <div id="modal-alert" class="modal-overlay">
       <div class="modal-content"></div>
     </div>
 
     <!-- ========== SCRIPTS ========== -->
     <script>
+      // Toggle mobile menu
       function toggleMenu() {
         document.getElementById("navLinks").classList.toggle("active");
       }
+
+      // Tab switching (for public profile, only 'Projects' is shown by default)
       function showTab(tabId) {
         document.getElementById("projectsTabBtn").classList.remove("active");
-        document.getElementById("joinRequestsTabBtn").classList.remove("active");
-        document.getElementById("adsTabBtn").classList.remove("active");
         document.getElementById("projectsTab").classList.remove("active");
-        document.getElementById("joinRequestsTab").classList.remove("active");
-        document.getElementById("adsTab").classList.remove("active");
+
         document.getElementById(tabId).classList.add("active");
         if (tabId === "projectsTab") {
           document.getElementById("projectsTabBtn").classList.add("active");
-        } else if (tabId === "joinRequestsTab") {
-          document.getElementById("joinRequestsTabBtn").classList.add("active");
-        } else if (tabId === "adsTab") {
-          document.getElementById("adsTabBtn").classList.add("active");
         }
       }
+
+      // Modal Alert function
       function showModalAlert(message, isError = false) {
         const modalOverlay = document.getElementById("modal-alert");
         const modalContent = modalOverlay.querySelector(".modal-content");
         let iconHtml = "";
+
         if (isError) {
           iconHtml = `
-            <svg class="modal-icon error" width="72" height="72" viewBox="0 0 24 24" 
-                 fill="none" stroke="#f44336" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="modal-icon error" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f44336" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10"/>
               <line x1="9" y1="9" x2="15" y2="15"/>
               <line x1="15" y1="9" x2="9" y2="15"/>
@@ -901,32 +776,50 @@
           modalContent.classList.add("modal-error");
         } else {
           iconHtml = `
-            <svg class="modal-icon" width="72" height="72" viewBox="0 0 24 24" 
-                 fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="modal-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10"/>
               <path d="M8 12.5l3 3 5-5"/>
             </svg>`;
           modalContent.classList.remove("modal-error");
         }
+
         modalContent.innerHTML = iconHtml + `<div class="modal-message">${message}</div>`;
         modalOverlay.classList.add("show");
+
         setTimeout(() => {
           modalOverlay.classList.remove("show");
         }, 3000);
       }
-      async function fetchUserData() {
+
+      // Extract username from URL (e.g., /users/johndoe)
+      function getUsernameFromURL() {
+        const pathParts = window.location.pathname.split("/");
+        return pathParts[pathParts.length - 1];
+      }
+
+      // Fetch public user data by username
+      async function fetchPublicUserData() {
+        const username = getUsernameFromURL();
         try {
-          const response = await fetch("/api/users/me", { credentials: "include" });
-          const data = await response.json();
-          if (data.success) {
-            const user = data.data;
+          const response = await fetch(`/api/users/${username}`);
+          const result = await response.json();
+          if (result.success) {
+            const user = result.data;
             document.getElementById("userNameDisplay").textContent = user.name || "N/A";
-            document.getElementById("userUsernameDisplay").textContent = "username : " + (user.username || "N/A");
-            document.getElementById("userSubtitle").textContent = user.domains && user.domains.length ? user.domains.join("  |  ") : "No domain info";
-            document.getElementById("userBio").textContent = user.bio || "No bio available";
+            if (user.domains && user.domains.length > 0) {
+              // Use a bolder divider if you like => " | "
+              document.getElementById("userSubtitle").textContent = user.domains.join(" | ");
+            } else {
+              document.getElementById("userSubtitle").textContent = "No domain info";
+            }
+            if (user.bio) {
+              document.getElementById("userBio").textContent = user.bio;
+            } else {
+              document.getElementById("userBio").textContent = "No bio available";
+            }
             const skillTagsEl = document.getElementById("skillTags");
             skillTagsEl.innerHTML = "";
-            if (user.skills && user.skills.length) {
+            if (user.skills && user.skills.length > 0) {
               user.skills.forEach(skill => {
                 const span = document.createElement("span");
                 span.className = "skill-tag";
@@ -937,6 +830,8 @@
               skillTagsEl.innerHTML = "<span class='skill-tag'>No skills found</span>";
             }
             document.getElementById("userLocation").textContent = user.location || "N/A";
+
+            // Big profile picture in profile section
             const bigProfilePic = document.getElementById("profilePic");
             const bigDefaultIcon = document.getElementById("defaultProfileIcon");
             if (user.profilePic) {
@@ -946,246 +841,68 @@
               bigProfilePic.style.display = "none";
               bigDefaultIcon.style.display = "block";
             }
-            document.getElementById("navUserName").textContent = user.name + " | " + user.username;
-            const navAvatarImg = document.getElementById("user-avatar-img");
-            const navDefaultAvatar = document.getElementById("default-avatar");
-            if (user.profilePic) {
-              navAvatarImg.src = user.profilePic;
-              navDefaultAvatar.style.display = "none";
-            } else {
-              navAvatarImg.style.display = "none";
-              navDefaultAvatar.style.display = "block";
-            }
+
+            // Once we have the user data, fetch the projects for this user
+            fetchPublicUserProjects(user._id);
           } else {
-            alert("Error fetching user data");
+            showModalAlert("Error fetching profile data", true);
           }
         } catch (error) {
-          console.error("Error fetching user data:", error);
+          console.error("Error fetching public user data:", error);
         }
       }
-      async function fetchUserProjects() {
+
+      // Fetch public projects for this user using their user ID
+      async function fetchPublicUserProjects(userId) {
         try {
-          const response = await fetch("/api/projects/my-projects", { credentials: "include" });
-          const data = await response.json();
+          const response = await fetch(`/api/projects/user/${userId}`);
+          const result = await response.json();
           const projectsGrid = document.getElementById("projectsGrid");
-          if (data.success) {
-            if (data.data.length) {
-              projectsGrid.innerHTML = data.data
-                .map(project => {
-                  const uploadTime = new Date(project.createdAt).toLocaleDateString();
-                  let mediaHtml = `<div class="project-media">
-                      <pre class="no-preview">No preview available</pre>
+          if (result.success) {
+            if (result.data.length > 0) {
+              projectsGrid.innerHTML = result.data.map(project => {
+                const uploadTime = new Date(project.createdAt).toLocaleDateString();
+                let mediaHtml = `
+                  <div class="project-media">
+                    <pre class="no-preview">No preview available</pre>
+                  </div>`;
+                if (project.fileUrl && /\.(png|jpg|jpeg|gif)$/i.test(project.fileUrl)) {
+                  mediaHtml = `
+                    <div class="project-media">
+                      <img src="${project.fileUrl}" alt="${project.title}" loading="lazy" />
                     </div>`;
-                  if (project.fileUrl && /\.(png|jpg|jpeg|gif)$/i.test(project.fileUrl)) {
-                    mediaHtml = `<div class="project-media">
-                        <img src="${project.fileUrl}" alt="${project.title}" loading="lazy" />
-                      </div>`;
-                  }
-                  return `
-                    <div class="project-card" onclick="viewProject('${project._id}')">
-                      <div class="card-header">
-                        <h3 class="project-title">${project.title || "Untitled"}</h3>
-                        <div class="project-info">
-                          <span class="project-time">${uploadTime}</span>
-                          <span class="project-domain">${project.domain || "N/A"}</span>
-                        </div>
-                      </div>
-                      ${mediaHtml}
-                      <div class="card-actions">
-                        <button onclick="event.stopPropagation(); viewProject('${project._id}')">View</button>
+                }
+                return `
+                  <div class="project-card" onclick="viewProject('${project._id}')">
+                    <div class="card-header">
+                      <h3 class="project-title">${project.title || "Untitled"}</h3>
+                      <div class="project-info">
+                        <span class="project-time">${uploadTime}</span>
+                        <span class="project-domain">${project.domain || "N/A"}</span>
                       </div>
                     </div>
-                  `;
-                })
-                .join("");
+                    ${mediaHtml}
+                    <div class="card-actions">
+                      <button onclick="event.stopPropagation(); viewProject('${project._id}')">View</button>
+                    </div>
+                  </div>`;
+              }).join("");
             } else {
-              projectsGrid.innerHTML = "<p>No projects to display yet. Start by uploading a new project!</p>";
+              projectsGrid.innerHTML = "<p>No projects to display.</p>";
             }
-          } else {
-            alert("Error fetching projects");
           }
         } catch (error) {
-          console.error("Error fetching projects:", error);
+          console.error("Error fetching public projects:", error);
         }
       }
+
       function viewProject(projectId) {
         window.location.href = `/project/${projectId}`;
       }
-      async function fetchUserAds() {
-        try {
-          const response = await fetch("/api/ads/my-ads", { credentials: "include" });
-          const data = await response.json();
-          const adsGrid = document.getElementById("adsGrid");
-          if (data.success) {
-            if (data.data.length) {
-              adsGrid.innerHTML = data.data
-                .map(ad => {
-                  const joinCount = ad.joinRequests ? ad.joinRequests.length : 0;
-                  return `
-                    <div class="ads-card">
-                      <h4>${ad.title || "Untitled"}</h4>
-                      <p>${ad.domain || "N/A"}</p>
-                      <p>${joinCount} join request${joinCount !== 1 ? "s" : ""}</p>
-                    </div>
-                  `;
-                })
-                .join("");
-            } else {
-              adsGrid.innerHTML = "<p>No team ads published yet. Create one to start collaborating!</p>";
-            }
-          } else {
-            alert("Error fetching ads");
-          }
-        } catch (error) {
-          console.error("Error fetching ads:", error);
-        }
-      }
-      async function fetchMyJoinRequests() {
-        try {
-          const response = await fetch("/api/ads/my-join-requests-applicant", { credentials: "include" });
-          const data = await response.json();
-          const myJoinRequestsContent = document.getElementById("myJoinRequestsContent");
-          if (data.success) {
-            if (data.data.length) {
-              let html = "";
-              data.data.forEach(item => {
-                if (item.joinRequests.length) {
-                  html += `
-                    <div class="ad-join-request">
-                      <h4>${item.title || "Untitled"}</h4>
-                      ${item.joinRequests.map(jr => `<p><strong>Status:</strong> ${jr.status}</p>`).join("")}
-                    </div>
-                  `;
-                }
-              });
-              myJoinRequestsContent.innerHTML = html || "<p>No join requests sent yet.</p>";
-            } else {
-              myJoinRequestsContent.innerHTML = "<p>No join requests sent yet.</p>";
-            }
-          } else {
-            alert("Error fetching your join requests: " + data.error);
-          }
-        } catch (err) {
-          console.error("Error fetching my join requests:", err);
-        }
-      }
-      async function fetchJoinRequests() {
-        try {
-          const response = await fetch("/api/ads/my-join-requests", { credentials: "include" });
-          const data = await response.json();
-          const joinRequestsContent = document.getElementById("joinRequestsContent");
-          if (data.success) {
-            if (data.data.length) {
-              let html = "";
-              data.data.forEach(item => {
-                if (item.joinRequests.length) {
-                  const requestsHtml = item.joinRequests
-                    .map(jr => `
-                      <div class="join-request-card">
-                        <div class="join-request-info">
-                          <p>${jr.user.name} (${jr.user.email})</p>
-                          <p><strong>Status:</strong> ${jr.status}</p>
-                        </div>
-                        <div class="join-request-buttons">
-                          ${
-                            jr.status === "pending"
-                              ? `<button onclick="acceptJoinRequest('${item.adId}', '${jr.user._id}')">Accept</button>
-                                 <button onclick="declineJoinRequest('${item.adId}', '${jr.user._id}')">Decline</button>`
-                              : ""
-                          }
-                        </div>
-                      </div>
-                    `)
-                    .join("");
-                  html += `
-                    <div class="ad-join-request">
-                      <h4>${item.title || "Untitled"}</h4>
-                      ${requestsHtml}
-                    </div>
-                  `;
-                }
-              });
-              joinRequestsContent.innerHTML = html || "<p>No join requests received yet.</p>";
-            } else {
-              joinRequestsContent.innerHTML = "<p>No join requests received yet.</p>";
-            }
-          } else {
-            alert("Error fetching join requests: " + data.error);
-          }
-        } catch (err) {
-          console.error("Error fetching join requests:", err);
-        }
-      }
-      async function acceptJoinRequest(adId, requesterId) {
-        try {
-          const response = await fetch(`/api/ads/${adId}/join/${requesterId}/accept`, {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" }
-          });
-          const result = await response.json();
-          if (result.success) {
-            showModalAlert("Join request accepted!");
-            fetchJoinRequests();
-            fetchUserAds();
-            fetchMyJoinRequests();
-          } else {
-            showModalAlert("Error: " + result.error, true);
-          }
-        } catch (error) {
-          showModalAlert("Error: " + error.message, true);
-        }
-      }
-      async function declineJoinRequest(adId, requesterId) {
-        try {
-          const response = await fetch(`/api/ads/${adId}/join/${requesterId}/decline`, {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" }
-          });
-          const result = await response.json();
-          if (result.success) {
-            showModalAlert("Join request declined!");
-            fetchJoinRequests();
-            fetchUserAds();
-            fetchMyJoinRequests();
-          } else {
-            showModalAlert("Error: " + result.error, true);
-          }
-        } catch (error) {
-          showModalAlert("Error: " + error.message, true);
-        }
-      }
-      document.getElementById("logoutBtn").addEventListener("click", async (e) => {
-        e.preventDefault();
-        try {
-          const response = await fetch("/api/auth/logout", {
-            method: "POST",
-            credentials: "include"
-          });
-          const result = await response.json();
-          if (result.success) {
-            showModalAlert("Logged out successfully");
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 3000);
-          } else {
-            showModalAlert("Logout failed", true);
-          }
-        } catch (error) {
-          showModalAlert("Error during logout: " + error.message, true);
-        }
-      });
-      document.addEventListener("DOMContentLoaded", () => {
-        showTab("projectsTab");
-        fetchUserData();
-        fetchUserProjects();
-        fetchUserAds();
-        fetchJoinRequests();
-        fetchMyJoinRequests();
-        document.getElementById("navbarUser").addEventListener("click", () => {
-          window.location.href = "/me";
-        });
+
+      // Initialization: load public profile data and projects
+      document.addEventListener("DOMContentLoaded", async () => {
+        fetchPublicUserData();
       });
     </script>
   </body>

@@ -14,7 +14,6 @@
         --transition-speed: 0.3s;
         --gradient: linear-gradient(45deg, #1976d2, #ff4081);
       }
-
       /* Navbar styles */
       .navbar {
         display: flex;
@@ -28,7 +27,6 @@
         z-index: 1000;
         border-bottom: 2px solid rgba(0, 0, 0, 0.1);
       }
-      /* Hamburger Menu Button (hidden on desktop) */
       .menu-toggle {
         display: none;
         background: none;
@@ -60,8 +58,6 @@
       .menu-toggle .hamburger::after {
         top: 8px;
       }
-
-      /* Wrap nav links for toggling */
       .nav-links {
         display: flex;
         gap: 2rem;
@@ -88,7 +84,6 @@
       .nav-link:hover::before {
         width: 100%;
       }
-
       .user-section {
         display: flex;
         align-items: center;
@@ -149,8 +144,6 @@
         color: var(--secondary-color);
         border: 1px solid var(--secondary-color);
       }
-
-      /* Responsive Navbar for Mobile */
       @media (max-width: 768px) {
         .menu-toggle {
           display: block;
@@ -170,7 +163,6 @@
           transform: translateY(0);
         }
       }
-
       /* Page styles */
       body {
         font-family: "Segoe UI", sans-serif;
@@ -188,14 +180,8 @@
         box-sizing: border-box;
       }
       @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
       header {
         text-align: center;
@@ -203,14 +189,8 @@
         animation: slideIn 1s ease-in-out;
       }
       @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateX(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
       }
       header h1 {
         font-size: 3em;
@@ -221,14 +201,9 @@
         animation: gradientShift 5s infinite alternate;
       }
       @keyframes gradientShift {
-        0% {
-          background-position: 0% 50%;
-        }
-        100% {
-          background-position: 100% 50%;
-        }
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
       }
-
       /* ===== Enhanced Form Styles ===== */
       .ad-form {
         background: var(--card-bg);
@@ -239,7 +214,6 @@
         overflow: hidden;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
       }
-      /* Gradient border effect for the form */
       .ad-form::after {
         content: "";
         position: absolute;
@@ -265,14 +239,8 @@
         border-bottom: 2px solid rgba(0, 0, 0, 0.1);
       }
       @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
       .form-columns {
         display: flex;
@@ -321,12 +289,6 @@
         border-color: var(--primary-color);
         box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
         background: #ffffff;
-      }
-      form input[type="text"]:hover,
-      form textarea:hover,
-      form select:hover,
-      form input[type="file"]:hover {
-        border-color: rgba(0, 0, 0, 0.3);
       }
       form textarea {
         min-height: 120px;
@@ -402,7 +364,6 @@
         font-size: 0.9rem;
         color: var(--primary-color);
       }
-
       @media (max-width: 768px) {
         .container {
           padding: 0 15px;
@@ -439,7 +400,6 @@
           transform: translateY(0);
         }
       }
-
       @media (max-width: 480px) {
         .ad-form {
           border-radius: 8px;
@@ -455,6 +415,58 @@
         .form-columns {
           flex-direction: column;
         }
+      }
+      /* Modal Alert Styles (matching signup.html and login.html) */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .modal-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal-content {
+        position: relative;
+        background: #fff;
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+        border: 2px solid transparent;
+        background-image: linear-gradient(to right, #dfe0e2, #bde7b9), linear-gradient(#fff, #fff);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+      .modal-overlay.show .modal-content {
+        transform: scale(1);
+      }
+      .modal-icon {
+        width: 72px;
+        height: 72px;
+        margin-bottom: 1rem;
+        animation: iconBounce 0.6s ease;
+      }
+      @keyframes iconBounce {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+      }
+      .modal-message {
+        font-size: 1.2rem;
+        color: var(--light-color);
       }
     </style>
   </head>
@@ -476,12 +488,11 @@
             <svg id="default-avatar" class="default-avatar" viewBox="0 0 24 24" style="display: none">
               <path
                 d="M12 2C6.48 2 2 6.48 2 
-                     12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 
-                     3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 
-                     14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 
-                     6-3.08 1.99 0 5.97 1.09 6 
-                     3.08-1.29 1.94-3.5 3.22-6 
-                     3.22z"
+                   12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 
+                   3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 
+                   14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 
+                   6-3.08 1.99 0 5.97 1.09 6 
+                   3.08-1.29 1.94-3.5 3.22-6 3.22z"
               />
             </svg>
           </div>
@@ -517,7 +528,7 @@
                   <option value="GAMING">Gaming</option>
                   <option value="PHOTOGRAPHY">Photography</option>
                   <option value="WRITING">Writing</option>
-                  <option value="IOT">Writing</option>
+                  <option value="IOT">IoT</option>
                   <option value="BLOCKCHAIN">Blockchain</option>
                   <option value="DATA SCIENCE">Data Science</option>
                   <option value="ROBOTICS">Robotics</option>
@@ -526,7 +537,6 @@
                   <option value="GAME DEV">Game Development</option>
                   <option value="DEVOPS">DevOps</option>
                   <option value="EMBEDDED SYSTEMS">Embedded Systems</option>
-                  <option value="IOT">IoT</option>
                   <option value="others">Others</option>
                 </select>
               </div>
@@ -543,32 +553,34 @@
 
               <div class="form-group">
                 <label for="project-links">Project Links (separated by commas)</label>
-                <input
-                  type="text"
-                  id="project-links"
-                  name="project-links"
-                  placeholder="https://example.com, https://github.com/example"
-                />
+                <input type="text" id="project-links" name="project-links" placeholder="https://example.com, https://github.com/example" />
               </div>
 
               <div class="form-group">
-                <label for="team-members">Team Members (separated by commas)</label>
-                <input
-                  type="text"
-                  id="team-members"
-                  name="team-members"
-                  placeholder="John Doe, Jane Doe"
-                />
+                <label for="team-members">Team Member Usernames (separated by commas)</label>
+                <input type="text" id="team-members" name="team-members" placeholder="e.g. johndoe, janedoe" />
               </div>
             </div>
             <div class="right-column">
+              <!-- New Preview Image Upload: This file will be used as preview image -->
               <div class="form-group">
                 <div class="file-upload">
                   <label class="file-upload-label">
-                    <span>📁 Upload Project File</span>
-                    <small>(For Art: image or video; For Coding: code archive e.g., ZIP)</small>
+                    <span>📸 Upload Preview Image</span>
+                    <small>(This image will be used as the project preview)</small>
+                    <span class="file-info" id="preview-file-info"></span>
+                    <input type="file" id="preview-file" name="previewImage" accept="image/*" required />
+                  </label>
+                </div>
+              </div>
+              <!-- Allow multiple project images upload -->
+              <div class="form-group">
+                <div class="file-upload">
+                  <label class="file-upload-label">
+                    <span>📁 Upload Project Photos</span>
+                    <small>(You can select multiple images)</small>
                     <span class="file-info" id="project-file-info"></span>
-                    <input type="file" id="project-file" name="file" required />
+                    <input type="file" id="project-file" name="projectImages" multiple accept="image/*" required />
                   </label>
                 </div>
               </div>
@@ -578,7 +590,7 @@
                   <label class="file-upload-label">
                     <span>🎥 Optional: Upload Demo Video</span>
                     <span class="file-info" id="demo-video-info"></span>
-                    <input type="file" id="demo-video" name="demo-video" />
+                    <input type="file" id="demo-video" name="demo-video" accept="video/*" />
                   </label>
                 </div>
               </div>
@@ -592,33 +604,61 @@
       </div>
     </div>
 
+    <!-- Modal Alert Container -->
+    <div id="modal-alert" class="modal-overlay">
+      <div class="modal-content"></div>
+    </div>
+
     <script>
-      // Toggle menu for mobile
       function toggleMenu() {
         document.getElementById("navLinks").classList.toggle("active");
       }
 
-      document.addEventListener("DOMContentLoaded", () => {
-        // Display selected file names
-        document
-          .getElementById("project-file")
-          .addEventListener("change", function () {
-            const infoSpan = document.getElementById("project-file-info");
-            infoSpan.textContent = this.files[0] ? `Selected: ${this.files[0].name}` : "";
-          });
-        document
-          .getElementById("demo-video")
-          .addEventListener("change", function () {
-            const infoSpan = document.getElementById("demo-video-info");
-            infoSpan.textContent = this.files[0] ? `Selected: ${this.files[0].name}` : "";
-          });
+      function showModalAlert(message, isError = false) {
+        const modalOverlay = document.getElementById("modal-alert");
+        const modalContent = modalOverlay.querySelector(".modal-content");
+        let iconHtml = "";
+        if (isError) {
+          iconHtml = `
+            <svg class="modal-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f44336" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+            </svg>`;
+        } else {
+          iconHtml = `
+            <svg class="modal-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 12.5l3 3 5-5"/>
+            </svg>`;
+        }
+        const modalMessage = `<div class="modal-message">${message}</div>`;
+        modalContent.innerHTML = iconHtml + modalMessage;
+        modalOverlay.classList.add("show");
+        setTimeout(() => {
+          modalOverlay.classList.remove("show");
+        }, 3000);
+      }
 
-        // Load navbar user details
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("project-file").addEventListener("change", function () {
+          const infoSpan = document.getElementById("project-file-info");
+          const fileNames = Array.from(this.files).map(file => file.name).join(", ");
+          infoSpan.textContent = fileNames ? `Selected: ${fileNames}` : "";
+        });
+        document.getElementById("preview-file").addEventListener("change", function () {
+          const infoSpan = document.getElementById("preview-file-info");
+          const fileName = this.files[0] ? this.files[0].name : "";
+          infoSpan.textContent = fileName ? `Selected: ${fileName}` : "";
+        });
+        document.getElementById("demo-video").addEventListener("change", function () {
+          const infoSpan = document.getElementById("demo-video-info");
+          infoSpan.textContent = this.files[0] ? `Selected: ${this.files[0].name}` : "";
+        });
+
         async function loadNavbarUserDetails() {
           try {
-            const res = await fetch("/api/users/me", {
-              credentials: "include",
-            });
+            const res = await fetch("/api/users/me", { credentials: "include" });
             if (!res.ok) throw new Error("Not authenticated");
             const data = await res.json();
             if (data.success) {
@@ -642,16 +682,15 @@
           }
         }
         loadNavbarUserDetails();
-        document
-          .getElementById("user-profile")
-          .addEventListener("click", () => {
-            window.location.href = "/me";
-          });
+        document.getElementById("user-profile").addEventListener("click", () => {
+          window.location.href = "/me";
+        });
 
-        // Intercept form submission and use fetch with FormData
         const projectForm = document.getElementById("projectForm");
         projectForm.addEventListener("submit", async (e) => {
           e.preventDefault();
+          const submitButton = projectForm.querySelector('input[type="submit"]');
+          submitButton.disabled = true;
           const formData = new FormData(projectForm);
           try {
             const response = await fetch("/api/projects", {
@@ -661,16 +700,18 @@
             });
             const result = await response.json();
             if (result.success) {
-              alert(result.message);
+              showModalAlert(result.message);
               projectForm.reset();
               document.getElementById("project-file-info").textContent = "";
+              document.getElementById("preview-file-info").textContent = "";
               document.getElementById("demo-video-info").textContent = "";
             } else {
-              alert("Error: " + result.error);
+              showModalAlert("Error: " + result.error, true);
             }
           } catch (error) {
-            alert("Error: " + error.message);
+            showModalAlert("Error: " + error.message, true);
           }
+          submitButton.disabled = false;
         });
       });
     </script>

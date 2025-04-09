@@ -58,5 +58,13 @@ app.get("/all-users", protect, (req, res) => {
 app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/about.html"));
 });
+app.get("/users/:username", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/profile.html"));
+});
+
+// New: Settings page route (protected)
+app.get("/settings", protect, (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/settings.html"));
+});
 
 module.exports = app;

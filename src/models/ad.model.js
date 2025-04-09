@@ -1,4 +1,4 @@
-// ad.model.js
+// src/models/ad.model.js
 const mongoose = require('mongoose');
 
 const JoinRequestSchema = new mongoose.Schema({
@@ -9,10 +9,20 @@ const JoinRequestSchema = new mongoose.Schema({
 const AdSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    domain: String,
-    title: String,
-    description: String,
-    // Store join requests as an array of objects with a user and status.
+    domain: { type: String, required: true },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    // New Field: Optional project/work deadline.
+    deadline: { type: Date },
+    // New Field: Project status with a set of allowed values.
+    status: { 
+      type: String, 
+      enum: ['Planning', 'In Progress', 'Completed', 'On Hold'], 
+      default: 'Planning',
+      required: true 
+    },
+    // New Field: Required skills (optional).
+    skills: { type: String },
     joinRequests: { type: [JoinRequestSchema], default: [] }
   },
   { timestamps: true }

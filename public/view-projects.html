@@ -2,8 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Project Showcase - View Projects</title>
+
+    <!-- FontAwesome via CDN (no integrity attribute) to avoid CORS issues -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <style>
       :root {
         /* Light theme colors matching landing.html */
@@ -166,7 +175,7 @@
         }
       }
 
-      /* Updated Project Grid Section */
+      /* Project Grid Section */
       .container {
         max-width: 1400px;
         margin: auto;
@@ -214,11 +223,69 @@
         cursor: pointer;
         display: flex;
         flex-direction: column;
+        border: 1px solid rgba(231, 194, 194, 0.6);
+        backdrop-filter: blur(4px);
+      }
+      .project-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15),
+          0 0 40px rgba(255, 255, 255, 0.1) inset;
       }
 
-      .project-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+      .card-header {
+        height: 130px;
+        padding: 15px 20px 0 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent 80%);
+      }
+
+      .project-title {
+        font-size: 1.2em;
+        margin: 0;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.4;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 1rem;
+      }
+
+      .project-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .project-time {
+        font-size: 0.9em;
+        opacity: 0.8;
+        white-space: nowrap;
+      }
+
+      .project-domain {
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 2rem;
+        padding: 6px 12px;
+        border: 1px solid rgba(238, 146, 146, 0.452);
+        box-shadow: 10px 4px 6px rgba(0,0,0,0.1);
+        font-size: 0.9em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 50%;
+        transition: all 0.3s ease;
       }
 
       .project-media {
@@ -226,72 +293,87 @@
         height: 200px;
         position: relative;
         overflow: hidden;
-        background: #f0f0f0; /* Placeholder background */
+        background: #ffffff;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        padding: 1rem;
       }
+
       .project-media img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.4s ease;
+        transition: transform 0.4s ease, filter 0.3s ease;
+        border-radius: 10px;
       }
+
       .project-card:hover .project-media img {
+        filter: brightness(1.1) saturate(1.1);
+      }
+
+      .card-actions {
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background: linear-gradient(to top, rgba(255,255,255,0.1), transparent);
+      }
+
+      .like-button {
+        background: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.3s ease;
+      }
+
+      .like-glass {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(196, 241, 241, 0.95);
+        backdrop-filter: blur(12px);
+        padding: 8px 18px;
+        border-radius: 20px;
+        color: var(--light-color);
+        border: 1px solid rgba(231, 161, 161, 0.2);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+      }
+
+      .like-glass:hover {
+        background: rgba(255, 255, 255, 0.25);
         transform: scale(1.05);
       }
 
-      .card-content {
-        padding: 25px;
-        flex: 1;
-        position: relative;
-      }
-
-      .card-content h3 {
-        font-size: 1.6em;
-        margin-bottom: 15px;
-        background: var(--gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .project-domain {
-        display: inline-block;
-        padding: 6px 15px;
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: 20px;
-        font-size: 0.85em;
-        font-weight: 600;
-        margin-bottom: 15px;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(0, 0, 0, 0.1);
+      .like-glass i {
         color: var(--primary-color);
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
       }
 
-      .card-content p {
-        font-size: 0.95em;
-        line-height: 1.6;
-        margin-bottom: 20px;
-        color: #555;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 3; /* Limit to 3 lines */
-        -webkit-box-orient: vertical;
-      }
-
-      .read-more {
-        color: var(--primary-color);
-        cursor: pointer;
+      .like-count {
         font-weight: 600;
-        text-decoration: underline;
+        font-size: 0.95em;
       }
 
-      .creator-info {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 15px;
-        padding-top: 15px;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        color: #666;
-        font-size: 0.95em;
+      .fa-thumbs-up {
+        font-size: 1.2rem;
+        background: rgba(var(--primary-color), 0.1);
+        padding: 0.2rem 0.5rem;
+        border-radius: 8px;
+        border: 1px solid rgb(156, 195, 231);
+      }
+
+      /* Gradient overlay for images */
+      .project-media::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.1));
+        pointer-events: none;
       }
 
       /* Loading State for Cards */
@@ -302,41 +384,30 @@
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         animation: pulse 1.5s infinite;
       }
-
       .loading-media {
         width: 100%;
         height: 200px;
         background: #f0f0f0;
       }
-
       .loading-content {
         padding: 25px;
       }
-
       .loading-title {
         width: 80%;
         height: 24px;
         background: #f0f0f0;
         margin-bottom: 15px;
       }
-
       .loading-description {
         width: 100%;
         height: 60px;
         background: #f0f0f0;
         margin-bottom: 20px;
       }
-
       @keyframes pulse {
-        0% {
-          opacity: 0.6;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0.6;
-        }
+        0% { opacity: 0.6; }
+        50% { opacity: 1; }
+        100% { opacity: 0.6; }
       }
 
       @media (max-width: 768px) {
@@ -344,19 +415,52 @@
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
       }
+
+      /* Toast (Error Box) */
+      #toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 9999;
+      }
+      .toast {
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        color: #fff;
+        background-color: #f44336;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        animation: fadeInOut 3s forwards;
+        font-size: 0.9rem;
+      }
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        10%, 90% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+      }
     </style>
   </head>
   <body>
-    <!-- Navbar -->
     <nav class="navbar">
       <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
         <span class="hamburger"></span>
       </button>
       <div class="nav-links" id="navLinks">
         <a href="/" class="nav-link">Home</a>
-        <a href="/upload" class="nav-link">Add Project</a>
-        <a href="/view-ads" class="nav-link">Team Ads</a>
+        <a href="/projects" class="nav-link">View Projects</a>
         <a href="/ads" class="nav-link">Publish Announcements</a>
+        <a href="/view-ads" class="nav-link">View Ads</a>
       </div>
       <div class="user-section">
         <div id="user-profile" class="user-profile">
@@ -373,7 +477,6 @@
       </div>
     </nav>
 
-    <!-- Project Grid Section -->
     <div class="container">
       <header>
         <h1>Community Projects</h1>
@@ -405,13 +508,15 @@
       </div>
     </div>
 
+    <!-- Toast Container (Beautiful Error Box) -->
+    <div id="toast-container"></div>
+
     <script>
       // Toggle menu for mobile
       function toggleMenu() {
         document.getElementById("navLinks").classList.toggle("active");
       }
 
-      // Enhanced User Profile Handling
       async function loadUserProfile() {
         try {
           const response = await fetch("/api/users/me", {
@@ -432,12 +537,43 @@
               avatarImg.style.display = "none";
               defaultAvatar.style.display = "block";
             }
-
             document.getElementById("user-name").textContent = user.name;
           }
         } catch (error) {
           console.log("User not authenticated");
           document.getElementById("user-profile").style.display = "none";
+        }
+      }
+
+      // Toast for errors
+      function showErrorToast(message) {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.classList.add("toast");
+        toast.textContent = message;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.remove();
+        }, 3000);
+      }
+
+      // Like a project
+      async function likeProject(projectId, likeButton) {
+        try {
+          const response = await fetch(`/api/projects/${projectId}/like`, {
+            method: "POST",
+            credentials: "include",
+          });
+          const data = await response.json();
+
+          if (data.success) {
+            likeButton.querySelector(".like-count").textContent = `(${data.data.likes})`;
+          } else {
+            showErrorToast(data.error);
+          }
+        } catch (err) {
+          console.error(err);
+          showErrorToast("Error liking project");
         }
       }
 
@@ -447,51 +583,63 @@
           const response = await fetch("/api/projects");
           const result = await response.json();
           const projectsGrid = document.getElementById("projectsGrid");
-          projectsGrid.innerHTML = ""; // Clear loading cards
+          projectsGrid.innerHTML = "";
 
           if (result.success) {
             result.data.forEach((project) => {
+              // Format the date as "Feb 22, 2025"
+              const options = { month: "short", day: "numeric", year: "numeric" };
+              const uploadTime = new Date(project.createdAt).toLocaleDateString("en-US", options);
+              
               const card = document.createElement("div");
               card.className = "project-card";
+
               card.addEventListener("click", () => {
                 window.location.href = `/project/${project._id}`;
               });
 
-              let fileContent = "";
-              if (
-                project.fileUrl &&
-                /\.(png|jpg|jpeg|gif)$/i.test(project.fileUrl)
-              ) {
-                fileContent = `
-                <div class="project-media">
+              let mediaHtml = `<div class="project-media">
+                <pre class="no-preview">No preview available</pre>
+              </div>`;
+              if (project.previewUrl && /\.(png|jpg|jpeg|gif)$/i.test(project.previewUrl)) {
+                mediaHtml = `<div class="project-media">
+                  <img src="${project.previewUrl}" alt="${project.title}" loading="lazy" />
+                </div>`;
+              } else if (project.fileUrl && /\.(png|jpg|jpeg|gif)$/i.test(project.fileUrl)) {
+                mediaHtml = `<div class="project-media">
                   <img src="${project.fileUrl}" alt="${project.title}" loading="lazy" />
                 </div>`;
-              } else {
-                fileContent = `
-                <div class="project-media">
-                  <pre class="no-preview">No preview available</pre>
+              } else if (project.photoUrls && project.photoUrls.length > 0 && /\.(png|jpg|jpeg|gif)$/i.test(project.photoUrls[0])) {
+                mediaHtml = `<div class="project-media">
+                  <img src="${project.photoUrls[0]}" alt="${project.title}" loading="lazy" />
                 </div>`;
               }
 
-              const description = project.description.length > 150
-                ? `${project.description.substring(0, 150)}... <span class="read-more">Read More</span>`
-                : project.description;
-
               card.innerHTML = `
-                ${fileContent}
-                <div class="card-content">
-                  <div class="project-domain">${project.domain}</div>
-                  <h3>${project.title}</h3>
-                  <p>${description}</p>
-                  <div class="creator-info">
-                    ${
-                      project.userId && project.userId.name
-                        ? project.userId.name
-                        : "Unknown Creator"
-                    }
+                <div class="card-header">
+                  <h3 class="project-title">${project.title || "Untitled"}</h3>
+                  <div class="project-info">
+                    <span class="project-time"><i class="fas fa-circle" style="font-size:0.4rem; vertical-align: middle; margin-right:3px;"></i>${uploadTime}</span>
+                    <span class="project-domain">${project.domain || "N/A"}</span>
                   </div>
                 </div>
+                ${mediaHtml}
+                <div class="card-actions">
+                  <button class="like-button" id="like-btn-${project._id}">
+                    <div class="like-glass">
+                      <i class="fas fa-thumbs-up"></i>
+                      <span class="like-count">(${project.likes || 0})</span>
+                    </div>
+                  </button>
+                </div>
               `;
+
+              const likeBtn = card.querySelector(`#like-btn-${project._id}`);
+              likeBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                likeProject(project._id, likeBtn);
+              });
+
               projectsGrid.appendChild(card);
             });
           } else {
@@ -502,17 +650,12 @@
         }
       }
 
-      // Initialize the page
       document.addEventListener("DOMContentLoaded", () => {
         loadUserProfile();
         fetchProjects();
-
-        // Add click handler for user profile
-        document
-          .getElementById("user-profile")
-          .addEventListener("click", () => {
-            window.location.href = "/me";
-          });
+        document.getElementById("user-profile").addEventListener("click", () => {
+          window.location.href = "/me";
+        });
       });
     </script>
   </body>

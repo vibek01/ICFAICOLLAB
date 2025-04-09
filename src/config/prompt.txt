@@ -45,42 +45,51 @@ Folder Structure
 pgsql
 Copy
 Edit
-/project-root
-│
-├── /controllers  
-│      ├── user.controller.js         // Contains signup, login (via auth.controller.js), getMe, and getUsers functions.
-│      ├── ad.controller.js           // Contains functions to create an ad, send join requests, accept/decline join requests, and retrieve ads and join requests.
-│      └── project.controller.js      // Contains functions to upload a project, get all projects, and get user-specific projects.
-│
-├── /models  
-│      ├── user.model.js              // Mongoose schema for User (name, email, password, domain, role) with pre-save password hashing.
-│      ├── ad.model.js                // Mongoose schema for Ad with fields: userId, domain, title, description, and an array of joinRequests (each join request has a user reference and a status).
-│      └── project.model.js           // Mongoose schema for Project (userId, title, description, domain, fileUrl).
-│
-├── /routes  
-│      ├── user.routes.js             // Routes for user operations: signup, get users, get current user.
-│      ├── ad.routes.js               // Routes for ad operations: create ad, get ads, get my ads, send join request, get join requests (both received and sent), accept/decline join request.
-│      ├── project.routes.js          // Routes for project operations: get all projects, get my projects, upload project (with file upload handling via Multer).
-│      ├── auth.routes.js             // Routes for authentication: login, logout, and status check.
-│      └── index.js                   // Combines all the above routes into a single router.
-│
-├── /middlewares  
-│      └── auth.middleware.js         // Contains middleware to protect routes by verifying JWT tokens and a helper to check public authentication status.
-│
-├── /public  
-│      ├── landing.html               // The landing (home) page.
-│      ├── signup.html                // Signup page.
-│      ├── login.html                 // Login page.
-│      ├── upload.html                // Project upload page (with form for file uploads).
-│      ├── view-ads.html              // Page to view all ads.
-│      ├── view-projects.html         // Page to view projects.
-│      └── user.html                  // User dashboard displaying profile, projects, ads, join requests received, and join requests sent.
-│
-├── /uploads                         // Directory where uploaded project files are stored.
-│
-├── server.js                        // Main entry point that initializes Express, connects to MongoDB, sets up middleware and routes.
-├── package.json                     // Contains project dependencies and scripts.
-└── .env                             // Environment variables (e.g., MongoDB URI, JWT secret, etc.)
+API - COPY/
+├── node_modules/                  # (Dependencies installed by npm)
+├── public/
+│   ├── about.html
+│   ├── all-user.html
+│   ├── login.html
+│   ├── signup.html
+│   ├── upload.html
+│   ├── settings.html
+│   ├── profile.html
+│   ├── user.html
+│   ├── view-ads.html
+│   └── view-project.html
+│   └── view-projects.html
+│   └── ads.html
+│   └── landing.html
+|   
+├── config/
+│   ├── db.js
+│   └── prompt.txt
+├── src/
+│   ├── controllers/
+│   │   ├── ad.controller.js
+│   │   ├── auth.controller.js
+│   │   ├── project.controller.js
+│   │   └── user.controller.js
+│   ├── middlewares/
+│   │   ├── auth.middleware.js
+│   │   └── error.middleware.js
+│   ├── models/
+│   │   ├── ad.model.js
+│   │   ├── project.model.js
+│   │   └── user.model.js
+│   └── routes/
+│       ├── ad.routes.js
+│       ├── auth.routes.js
+│       ├── index.js
+│       ├── project.routes.js
+│       └── user.routes.js
+├── uploads/
+├── .env
+├── .gitignore
+├── package-lock.json
+├── package.json
+└── server.js
 Key Code Snippets
 1. User Model (user.model.js)
 js
@@ -273,42 +282,6 @@ exports.getJoinRequestsForMyAds = async (req, res) => {
 pgsql
 Copy
 Edit
-/project-root
-│
-├── /controllers
-│       ├── user.controller.js       // Handles user signup, login (via auth.controller.js), fetching current user data, etc.
-│       ├── ad.controller.js         // Handles ad creation, join request operations (send, accept, decline, fetch join requests)
-│       └── project.controller.js    // Handles project uploads and retrieval (using Multer)
-│
-├── /models
-│       ├── user.model.js            // User schema (name, email, password, domain, role) with bcrypt hashing
-│       ├── ad.model.js              // Ad schema (userId, domain, title, description, joinRequests array)
-│       └── project.model.js         // Project schema (userId, title, description, domain, fileUrl)
-│
-├── /routes
-│       ├── user.routes.js           // Routes for user endpoints (signup, getMe, getUsers)
-│       ├── ad.routes.js             // Routes for ad endpoints (create ad, get ads, send join request, accept/decline join request, fetch join requests)
-│       ├── project.routes.js        // Routes for project endpoints (upload, get projects, get my projects)
-│       ├── auth.routes.js           // Routes for authentication (login, logout, status)
-│       └── index.js                 // Combines all routes into one central router
-│
-├── /middlewares
-│       └── auth.middleware.js       // Middleware to protect routes by verifying JWT tokens
-│
-├── /public
-│       ├── landing.html             // Landing page
-│       ├── signup.html              // Signup page
-│       ├── login.html               // Login page
-│       ├── upload.html              // Project upload page (with file upload form)
-│       ├── view-ads.html            // Page to view ads
-│       ├── view-projects.html       // Page to view projects
-│       └── user.html                // User dashboard (displays profile, projects, ads, join requests received, and join requests sent)
-│
-├── /uploads                         // Folder to store uploaded project files
-│
-├── server.js                        // Main Express server file; sets up middleware, routes, and MongoDB connection
-├── package.json                     // Contains project dependencies and scripts
-└── .env                             // Environment variables (e.g., MongoDB URI, JWT secret)
 Summary for the Chatbot
 Project: Project Showcase
 Stack: Node.js, Express.js, MongoDB (Mongoose), plain HTML/CSS/JS

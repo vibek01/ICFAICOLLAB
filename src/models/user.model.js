@@ -8,6 +8,13 @@ const UserSchema = new mongoose.Schema(
       type: String, 
       required: true 
     },
+    username: { 
+      type: String, 
+      required: true, 
+      unique: true,
+      lowercase: true,  // ensure consistency
+      trim: true
+    },
     email: {
       type: String, 
       required: true, 
@@ -17,8 +24,17 @@ const UserSchema = new mongoose.Schema(
       type: String, 
       required: true 
     },
-    domain: { 
-      type: String 
+    domains: { 
+      type: [String]  
+    },
+    skills: {
+      type: [String]  
+    },
+    profilePic: { 
+      type: String    
+    },
+    bio: {
+      type: String
     },
     role: { 
       type: String, 
@@ -29,7 +45,7 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Pre-save hook to hash password if modified
+// Hash password before saving
 UserSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
@@ -37,7 +53,6 @@ UserSchema.pre('save', async function(next) {
   next();
 });
 
-// Instance method to compare passwords
 UserSchema.methods.matchPassword = async function(enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

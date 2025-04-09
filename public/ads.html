@@ -274,11 +274,11 @@
         padding-left: 0.5rem;
         background: var(--gradient);
         -webkit-background-clip: text;
-        /* -webkit-text-fill-color: transparent; */
       }
       .ad-form select,
       .ad-form textarea,
-      .ad-form input[type="text"] {
+      .ad-form input[type="text"],
+      .ad-form input[type="date"] {
         width: 100%;
         padding: 1rem;
         border: 2px solid rgba(0, 0, 0, 0.1);
@@ -291,7 +291,8 @@
       }
       .ad-form select:focus,
       .ad-form textarea:focus,
-      .ad-form input[type="text"]:focus {
+      .ad-form input[type="text"]:focus,
+      .ad-form input[type="date"]:focus {
         outline: none;
         border-color: var(--primary-color);
         box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
@@ -299,7 +300,8 @@
       }
       .ad-form select:hover,
       .ad-form textarea:hover,
-      .ad-form input[type="text"]:hover {
+      .ad-form input[type="text"]:hover,
+      .ad-form input[type="date"]:hover {
         border-color: rgba(0, 0, 0, 0.3);
       }
       .ad-form textarea {
@@ -355,7 +357,8 @@
         }
         .ad-form select,
         .ad-form textarea,
-        .ad-form input[type="text"] {
+        .ad-form input[type="text"],
+        .ad-form input[type="date"] {
           padding: 0.8rem;
           font-size: 0.9rem;
         }
@@ -434,12 +437,25 @@
             <label for="domain">Select Domain</label>
             <select id="domain" name="domain" required>
               <option value="" disabled selected>-- Choose Domain --</option>
-              <option value="art">Art</option>
-              <option value="coding">Coding</option>
-              <option value="design">Design</option>
-              <option value="ai">AI</option>
-              <option value="cybersecurity">Cybersecurity</option>
-              <option value="webdev">Web Development</option>
+              <option value="ART">Art</option>
+              <option value="CODING">Coding</option>
+              <option value="DESIGN">Design</option>
+              <option value="AI">AI</option>
+              <option value="CYBERSECURITY">Cybersecurity</option>
+              <option value="WEB DEV">Web Development</option>
+              <option value="MUSIC">Music</option>
+              <option value="GAMING">Gaming</option>
+              <option value="PHOTOGRAPHY">Photography</option>
+              <option value="WRITING">Writing</option>
+              <option value="IOT">IoT</option>
+              <option value="BLOCKCHAIN">Blockchain</option>
+              <option value="DATA SCIENCE">Data Science</option>
+              <option value="ROBOTICS">Robotics</option>
+              <option value="MOBILE APP DEV">Mobile App Development</option>
+              <option value="AR/VR">AR/VR</option>
+              <option value="GAME DEV">Game Development</option>
+              <option value="DEVOPS">DevOps</option>
+              <option value="EMBEDDED SYSTEMS">Embedded Systems</option>
             </select>
           </div>
 
@@ -451,6 +467,30 @@
           <div class="form-group">
             <label for="description">Ad Description</label>
             <textarea id="description" name="description" required></textarea>
+          </div>
+
+          <!-- New Field: Project/Work Deadline (Optional) -->
+          <div class="form-group">
+            <label for="deadline">Project Deadline (Optional)</label>
+            <input type="date" id="deadline" name="deadline" />
+          </div>
+
+          <!-- New Field: Project Status -->
+          <div class="form-group">
+            <label for="status">Project Status</label>
+            <select id="status" name="status" required>
+              <option value="" disabled selected>-- Select Status --</option>
+              <option value="Planning">Planning</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="On Hold">On Hold</option>
+            </select>
+          </div>
+
+          <!-- New Field: Required Skills (Optional) -->
+          <div class="form-group">
+            <label for="skills">Required Skills (Optional)</label>
+            <input type="text" id="skills" name="skills" placeholder="e.g., JavaScript, UI/UX, Node.js" />
           </div>
 
           <input type="submit" value="Publish Ad" />

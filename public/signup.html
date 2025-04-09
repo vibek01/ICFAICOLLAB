@@ -2,195 +2,557 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <title>Sign Up Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project Showcase - User Signup</title>
+    <!-- Same color scheme as your provided code -->
     <style>
-      :root {
-        --primary-color: #1976d2;
-        --secondary-color: #ff4081;
-        --background-color: #a2b379;
-        --light-color: #333333;
-        --card-bg: #ffffff;
-        --transition-speed: 0.3s;
-        --gradient: linear-gradient(45deg, #1976d2, #ff4081);
+      /* RESET & VARIABLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
+      :root {
+        --primary-color: #1976d2; /* Blue Accent */
+        --secondary-color: #ff4081; /* Pink Accent */
+        --background-color: #a2b379; /* Light Background */
+        --light-color: #333333; /* Dark Text */
+        --card-bg: #ffffff; /* White Cards */
+        --transition-speed: 0.3s;
+        --gradient: linear-gradient(45deg, #1976d2, #86b582);
+      }
+
       body {
         font-family: "Segoe UI", sans-serif;
-        background: linear-gradient(30deg, #ffffff, #92ff7952);
-        color: var(--light-color);
+        background: linear-gradient(45deg, #d0d6db, #c9f1c6);
         display: flex;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        margin: 0;
+        padding: 2rem;
       }
-      .signup-container {
-        background: var(--card-bg);
-        padding: 30px;
+
+      /* WRAPPER: Two-column container */
+      .signup-wrapper {
+        display: flex;
+        width: 90%;
+        max-width: 900px;
+        background: var(--gradient); /* Outer container gradient */
         border-radius: 10px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-        width: 100%;
-        max-width: 400px;
-        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 10px 8px 16px rgba(0, 0, 0, 0.15);
         overflow: hidden;
       }
-      .signup-container::after {
-        content: "";
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: var(--gradient);
-        z-index: -1;
-        border-radius: 12px;
+
+      /* LEFT COLUMN: SIGNUP FORM PANEL */
+      .signup-left {
+        flex: 1;
+        background: #fff;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
-      .signup-container h2 {
+      .signup-left h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
         text-align: center;
-        margin-bottom: 20px;
-        color: var(--light-color);
+      }
+      .signup-left p.subtitle {
+        font-size: 0.9rem;
+        color: #666;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      /* FORM FIELDS */
+      form {
+        display: flex;
+        flex-direction: column;
       }
       form label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        font-size: 0.9rem;
-        padding-left: 0.5rem;
-        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+        margin: 0.5rem 0 0.2rem;
+        color: #444;
       }
       form input,
-      form select {
-        width: 100%;
-        padding: 1rem;
-        margin-bottom: 15px;
+      form textarea {
+        padding: 0.8rem;
         border: 2px solid rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        background: #ffffff;
-        color: var(--light-color);
-        font-size: 1rem;
-        transition: all var(--transition-speed) ease;
-        box-sizing: border-box;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        transition: border-color var(--transition-speed);
       }
       form input:focus,
-      form select:focus {
+      form textarea:focus {
         outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
-        background: #ffffff;
+        border-color: #ff5e62;
       }
+      form input[type="file"] {
+        padding: 0.3rem;
+      }
+      /* SUBMIT BUTTON */
       form input[type="submit"] {
-        width: 100%;
-        padding: 1rem;
         border: none;
-        border-radius: 8px;
         background: var(--gradient);
-        color: var(--light-color);
+        color: #fff;
         font-weight: 600;
         cursor: pointer;
-        transition: all var(--transition-speed) ease;
-        position: relative;
-        overflow: hidden;
-      }
-      form input[type="submit"]::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          120deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
-        transition: 0.6s;
+        margin-top: 0.5rem;
+        transition: transform var(--transition-speed);
       }
       form input[type="submit"]:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(255, 64, 129, 0.3);
+        box-shadow: 0 8px 16px rgba(255, 94, 98, 0.2);
       }
-      form input[type="submit"]:hover::before {
-        left: 100%;
+
+      /* RIGHT COLUMN: WELCOME MESSAGE */
+      .signup-right {
+        flex: 1;
+        background: var(--gradient);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+      }
+      .signup-right h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      .signup-right p {
+        font-size: 1rem;
+        max-width: 300px;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      /* DOMAINS SECTION */
+      .domains-section {
+        border: 1px solid #000; /* black outline */
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: #fff; /* White so glass chips stand out */
+        position: relative;
+      }
+      .domains-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      .domains-title {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+      .search-input {
+        width: 45%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      /* DOMAIN CHIPS (Glassmorphism) */
+      .domains-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        max-height: 150px;
+        overflow-y: auto;
+      }
+      .domain-chip {
+        background: rgba(255, 255, 255, 0.3); /* glass effect */
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        transition: background-color var(--transition-speed),
+          color var(--transition-speed),
+          transform var(--transition-speed);
+      }
+      .domain-chip:hover {
+        transform: scale(1.03);
+      }
+      .domain-chip.selected {
+        background-color: #1976d2;
+        color: #fff;
+        border-color: #1976d2;
+      }
+
+      /* New: Username field styles */
+      .username-status {
+        font-size: 0.85rem;
+        margin-top: -0.5rem;
+        margin-bottom: 1rem;
+      }
+      .username-status.available {
+        color: green;
+      }
+      .username-status.taken {
+        color: red;
+      }
+
+      /* RESPONSIVE (Under 768px) */
+      @media (max-width: 768px) {
+        .signup-wrapper {
+          flex-direction: column;
+          width: 100%;
+          max-width: 500px;
+          margin: 0 auto;
+          border-radius: 8px;
+        }
+        .signup-right {
+          order: -1;
+          align-items: center;
+          padding: 2rem 1.5rem;
+        }
+        .search-input {
+          width: 60%;
+        }
+      }
+      /* Further adjustments for narrower devices (Under 480px) */
+      @media (max-width: 480px) {
+        body {
+          padding: 1rem;
+        }
+        .signup-left,
+        .signup-right {
+          padding: 1.5rem;
+        }
+        .signup-left h2 {
+          font-size: 1.5rem;
+        }
+        .search-input {
+          width: 100%;
+        }
+      }
+
+      /* Modal Alert Styles (Next Level) - same as login.html with new gradient */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .modal-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal-content {
+        position: relative;
+        background: #fff;
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        transform: scale(0.8);
+        transition: transform 0.3s ease;
+        /* 2px border with new gradient */
+        border: 2px solid transparent;
+        background-image: linear-gradient(to right, #dfe0e2, #bde7b9), linear-gradient(#fff, #fff);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+      .modal-overlay.show .modal-content {
+        transform: scale(1);
+      }
+      /* Icon styling */
+      .modal-icon {
+        width: 72px;
+        height: 72px;
+        margin-bottom: 1rem;
+        animation: iconBounce 0.6s ease;
+      }
+      /* Shake animation for error icons */
+      .modal-icon.error {
+        animation: iconBounce 0.6s ease, shake 0.6s ease;
+      }
+      @keyframes iconBounce {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+      }
+      .modal-message {
+        font-size: 1.2rem;
+        color: var(--light-color);
+      }
+      /* Error variant for modal content */
+      .modal-content.modal-error {
+        background-image: linear-gradient(45deg, #f3f3f3, #ecbbb7), linear-gradient(#fff, #fff);
       }
     </style>
   </head>
   <body>
-    <div class="signup-container">
-      <h2>User Signup</h2>
-      <form id="signupForm">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required />
+    <div class="signup-wrapper">
+      <!-- LEFT PANEL: SIGNUP FORM -->
+      <div class="signup-left">
+        <h2>Sign Up</h2>
+        <p class="subtitle">Hello, friend! Create an account to get started.</p>
+        <form id="signupForm" enctype="multipart/form-data">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required />
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required />
+          <!-- New: Username Field -->
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required />
+          <div id="usernameStatus" class="username-status"></div>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
 
-        <label for="domain">Select Your Domain</label>
-        <select id="domain" name="domain" required>
-          <option value="" disabled selected>-- Choose Domain --</option>
-              <option value="ART">Art</option>
-              <option value="CODING">Coding</option>
-              <option value="DESIGN">Design</option>
-              <option value="AI">AI</option>
-              <option value="CYBERSECURITY">Cybersecurity</option>
-              <option value="WEB DEV">Web Development</option>
-              <option value="MUSIC">Music</option>
-              <option value="GAMING">Gaming</option>
-              <option value="PHOTOGRAPHY">Photography</option>
-              <option value="WRITING">Writing</option>
-              <option value="IOT">Writing</option>
-              <option value="BLOCKCHAIN">Blockchain</option>
-              <option value="DATA SCIENCE">Data Science</option>
-              <option value="ROBOTICS">Robotics</option>
-              <option value="MOBILE APP DEV">Mobile App Development</option>
-              <option value="AR/VR">AR/VR</option>
-              <option value="GAME DEV">Game Development</option>
-              <option value="DEVOPS">DevOps</option>
-              <option value="EMBEDDED SYSTEMS">Embedded Systems</option>
-              <option value="IOT">IoT</option>
-              <option value="others">Others</option>
-        </select>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
 
-        <input type="submit" value="Sign Up" />
-      </form>
+          <!-- DOMAINS SECTION -->
+          <div class="domains-section">
+            <div class="domains-header">
+              <span class="domains-title">Enter Your domains:</span>
+              <input
+                type="text"
+                id="domainSearch"
+                placeholder="Search domain"
+                class="search-input"
+              />
+            </div>
+            <div class="domains-container" id="domainsContainer">
+              <!-- 30 Tech domains -->
+              <div class="domain-chip" data-value="Backend">Backend</div>
+              <div class="domain-chip" data-value="Mobile Dev">Mobile Dev</div>
+              <div class="domain-chip" data-value="Frontend Developer">Frontend Developer</div>
+              <div class="domain-chip" data-value="DevOps">DevOps</div>
+              <div class="domain-chip" data-value="Cloud Engineering">Cloud Engineering</div>
+              <div class="domain-chip" data-value="AI">AI</div>
+              <div class="domain-chip" data-value="Machine Learning">Machine Learning</div>
+              <div class="domain-chip" data-value="Data Science">Data Science</div>
+              <div class="domain-chip" data-value="Cybersecurity">Cybersecurity</div>
+              <div class="domain-chip" data-value="Blockchain">Blockchain</div>
+              <div class="domain-chip" data-value="IoT">IoT</div>
+              <div class="domain-chip" data-value="AR/VR">AR/VR</div>
+              <div class="domain-chip" data-value="Game Development">Game Development</div>
+              <div class="domain-chip" data-value="Database Admin">Database Admin</div>
+              <div class="domain-chip" data-value="Robotics">Robotics</div>
+              <div class="domain-chip" data-value="UI/UX">UI/UX</div>
+              <div class="domain-chip" data-value="Software Testing">Software Testing</div>
+              <div class="domain-chip" data-value="Embedded Systems">Embedded Systems</div>
+              <div class="domain-chip" data-value="Desktop Apps">Desktop Apps</div>
+              <div class="domain-chip" data-value="Data Engineering">Data Engineering</div>
+              <div class="domain-chip" data-value="Network Engineering">Network Engineering</div>
+              <div class="domain-chip" data-value="System Architecture">System Architecture</div>
+              <div class="domain-chip" data-value="E-commerce">E-commerce</div>
+              <div class="domain-chip" data-value="Big Data">Big Data</div>
+              <div class="domain-chip" data-value="Quantum Computing">Quantum Computing</div>
+              <div class="domain-chip" data-value="Computer Vision">Computer Vision</div>
+              <div class="domain-chip" data-value="NLP">NLP</div>
+              <div class="domain-chip" data-value="Full Stack">Full Stack</div>
+              <div class="domain-chip" data-value="SRE">SRE</div>
+              <div class="domain-chip" data-value="Tech Support">Tech Support</div>
+
+              <!-- 10 Generic domains -->
+              <div class="domain-chip" data-value="Music">Music</div>
+              <div class="domain-chip" data-value="Art">Art</div>
+              <div class="domain-chip" data-value="Photography">Photography</div>
+              <div class="domain-chip" data-value="Cooking">Cooking</div>
+              <div class="domain-chip" data-value="Writing">Writing</div>
+              <div class="domain-chip" data-value="Graphic Design">Graphic Design</div>
+              <div class="domain-chip" data-value="Video Editing">Video Editing</div>
+              <div class="domain-chip" data-value="Marketing">Marketing</div>
+              <div class="domain-chip" data-value="Business">Business</div>
+              <div class="domain-chip" data-value="Finance">Finance</div>
+            </div>
+          </div>
+          <!-- Hidden input to store the selected domains as comma-separated values -->
+          <input type="hidden" id="domains" name="domains" />
+
+          <label for="skills">Skills (comma separated)</label>
+          <input
+            type="text"
+            id="skills"
+            name="skills"
+            placeholder="e.g. JavaScript, Python, CSS"
+          />
+
+          <label for="bio">Short Bio</label>
+          <textarea
+            id="bio"
+            name="bio"
+            placeholder="Tell us something about yourself"
+          ></textarea>
+
+          <label for="profilePic">Profile Picture</label>
+          <input type="file" id="profilePic" name="profilePic" accept="image/*" />
+
+          <input type="submit" value="Create Account" />
+        </form>
+      </div>
+
+      <!-- RIGHT PANEL: WELCOME MESSAGE -->
+      <div class="signup-right">
+        <h3>Glad to see You!</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sign up to
+          explore more features and showcase your projects to the world!
+        </p>
+      </div>
+    </div>
+
+    <!-- Modal Alert Container (matching login.html) -->
+    <div id="modal-alert" class="modal-overlay">
+      <div class="modal-content"></div>
     </div>
 
     <script>
-      document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      // Domain chip selection logic
+      const domainChips = document.querySelectorAll(".domain-chip");
+      const domainsInput = document.getElementById("domains");
+      const domainSearch = document.getElementById("domainSearch");
+
+      domainChips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chip.classList.toggle("selected");
+          updateDomainsInput();
+        });
+      });
+
+      function updateDomainsInput() {
+        const selectedDomains = [];
+        domainChips.forEach((chip) => {
+          if (chip.classList.contains("selected")) {
+            selectedDomains.push(chip.getAttribute("data-value"));
+          }
+        });
+        // Store as comma-separated string in hidden input
+        domainsInput.value = selectedDomains.join(", ");
+      }
+
+      // Search/filter logic for domains
+      domainSearch.addEventListener("input", function () {
+        const searchValue = this.value.toLowerCase().trim();
+        domainChips.forEach((chip) => {
+          const chipText = chip.getAttribute("data-value").toLowerCase();
+          chip.style.display = chipText.includes(searchValue)
+            ? "inline-flex"
+            : "none";
+        });
+      });
+
+      // Username availability check logic
+      const usernameInput = document.getElementById("username");
+      const usernameStatus = document.getElementById("usernameStatus");
+      let usernameTimeout = null;
+
+      usernameInput.addEventListener("input", function () {
+        clearTimeout(usernameTimeout);
+        const username = usernameInput.value.trim();
+        if (username.length < 3) {
+          usernameStatus.textContent = "Username must be at least 3 characters.";
+          usernameStatus.className = "username-status taken";
+          return;
+        }
+        // Debounce API call
+        usernameTimeout = setTimeout(async () => {
+          try {
+            const response = await fetch(`/api/users/check-username?username=${encodeURIComponent(username)}`);
+            const result = await response.json();
+            if (result.available) {
+              usernameStatus.textContent = "Username is available.";
+              usernameStatus.className = "username-status available";
+            } else {
+              usernameStatus.textContent = "Username is already taken.";
+              usernameStatus.className = "username-status taken";
+            }
+          } catch (error) {
+            usernameStatus.textContent = "Error checking username.";
+            usernameStatus.className = "username-status taken";
+          }
+        }, 500);
+      });
+
+      // Modal Alert function (Next Level) - same as login
+      function showModalAlert(message, isError = false) {
+        const modalOverlay = document.getElementById("modal-alert");
+        const modalContent = modalOverlay.querySelector(".modal-content");
+        let iconHtml = "";
+
+        if (isError) {
+          // Circle with an 'X'
+          iconHtml = `
+            <svg class="modal-icon error" width="72" height="72" viewBox="0 0 24 24" 
+                 fill="none" stroke="#f44336" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+            </svg>`;
+          modalContent.classList.add("modal-error");
+        } else {
+          // Circle with a check
+          iconHtml = `
+            <svg class="modal-icon" width="72" height="72" viewBox="0 0 24 24" 
+                 fill="none" stroke="#4caf50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 12.5l3 3 5-5"/>
+            </svg>`;
+          modalContent.classList.remove("modal-error");
+        }
+
+        modalContent.innerHTML = iconHtml + `<div class="modal-message">${message}</div>`;
+        modalOverlay.classList.add("show");
+
+        // Auto-close after 3 seconds
+        setTimeout(() => {
+          modalOverlay.classList.remove("show");
+        }, 3000);
+      }
+
+      // Existing form submission using modal alert
+      document.getElementById("signupForm").addEventListener("submit", async function (e) {
         e.preventDefault();
-
-        const formData = {
-          name: this.name.value,
-          email: this.email.value,
-          password: this.password.value,
-          domain: this.domain.value
-        };
-
+        const formData = new FormData(this);
         try {
-          const response = await fetch('/api/users/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include', // Include cookies if you’re setting them on signup
-            body: JSON.stringify(formData)
+          const response = await fetch("/api/users/signup", {
+            method: "POST",
+            credentials: "include",
+            body: formData,
           });
           const result = await response.json();
-
           if (result.success) {
-            alert('User created successfully');
+            showModalAlert("User created successfully");
             this.reset();
-            window.location.href = '/login';
+            setTimeout(() => {
+              window.location.href = "/login";
+            }, 3000);
           } else {
-            // The server might return an 'error' or 'message' property
-            const errorMsg = result.error || result.message || 'Unknown error';
-            alert('Error: ' + errorMsg);
+            const errorMsg = result.error || result.message || "Unknown error";
+            showModalAlert("Error: " + errorMsg, true);
           }
         } catch (error) {
-          alert('Error: ' + error.message);
+          showModalAlert("Error: " + error.message, true);
         }
       });
     </script>
