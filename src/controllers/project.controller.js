@@ -1,21 +1,19 @@
-// project.controller.js
-const Project = require("../models/project.model");
+const Project    = require("../models/project.model");
 const cloudinary = require("../config/cloudinary");
 
-// Utility function to upload a file buffer to Cloudinary
-const uploadToCloudinary = (buffer, folder) => {
-  return new Promise((resolve, reject) => {
+// Helper: buffer → Cloudinary
+const uploadToCloudinary = (buffer, folder) =>
+  new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       { folder },
-      (error, result) => {
-        if (result) resolve(result.secure_url);
-        else reject(error);
-      }
+      (err, result) => err ? reject(err) : resolve(result.secure_url)
     );
     stream.end(buffer);
   });
-};
 
+/**
+ * Public: create a new project
+ */
 exports.uploadProject = async (req, res) => {
   try {
     const {
@@ -26,148 +24,117 @@ exports.uploadProject = async (req, res) => {
       "team-members": teamMembers,
     } = req.body;
 
-    let fileUrl = "";
-    let previewUrl = "";
-    let photoUrls = [];
+    let fileUrl      = "";
+    let previewUrl   = "";
+    let photoUrls    = [];
+    let demoVideoUrl = "";
 
-    // Process a single main file if provided (optional)
-    if (req.files && req.files['file']) {
-      const mainFile = req.files['file'][0];
-      fileUrl = await uploadToCloudinary(mainFile.buffer, "project_showcase");
+    if (req.files?.file) {
+      fileUrl = await uploadToCloudinary(req.files.file[0].buffer, "project_showcase");
     }
-
-    // Process the preview image (required)
-    if (req.files && req.files['previewImage']) {
-      const previewFile = req.files['previewImage'][0];
-      previewUrl = await uploadToCloudinary(previewFile.buffer, "project_previews");
+    if (req.files?.previewImage) {
+      previewUrl = await uploadToCloudinary(req.files.previewImage[0].buffer, "project_previews");
     }
-
-    // Process multiple project photos
-    if (req.files && req.files['projectImages']) {
-      const images = req.files['projectImages'];
+    if (req.files?.projectImages) {
       photoUrls = await Promise.all(
-        images.map(file => uploadToCloudinary(file.buffer, "project_showcase"))
+        req.files.projectImages.map(f => uploadToCloudinary(f.buffer, "project_showcase"))
       );
     }
-
-    // Process optional demo video
-    let demoVideoUrl = "";
-    if (req.files && req.files['demo-video']) {
-      const demoFile = req.files['demo-video'][0];
-      demoVideoUrl = await uploadToCloudinary(demoFile.buffer, "project_videos");
+    if (req.files?.["demo-video"]) {
+      demoVideoUrl = await uploadToCloudinary(req.files["demo-video"][0].buffer, "project_videos");
     }
 
-    // Process comma-separated project links and team members
-    const linksArray = projectLinks
-      ? projectLinks.split(",").map(link => link.trim()).filter(link => link)
-      : [];
-    const teamMembersArray = teamMembers
-      ? teamMembers.split(",").map(member => member.trim()).filter(member => member)
-      : [];
+    const linksArray       = projectLinks ? projectLinks.split(",").map(l => l.trim()).filter(l => l) : [];
+    const teamMembersArray = teamMembers ? teamMembers.split(",").map(m => m.trim()).filter(m => m) : [];
 
     const project = new Project({
-      userId: req.user.id,
+      userId:       req.user.id,
       title,
       description,
       domain,
       fileUrl,
-      previewUrl,    // Save preview image URL for display as the project preview
-      photoUrls,     // Array of additional photo URLs
-      projectLinks: linksArray,
-      teamMembers: teamMembersArray,
-      // Optionally, you can store demoVideoUrl if needed:
+      previewUrl,
+      photoUrls,
       demoVideoUrl,
+      projectLinks: linksArray,
+      teamMembers:  teamMembersArray,
     });
-
     await project.save();
-    return res.status(201).json({
-      success: true,
-      message: "Project created successfully",
-      data: project,
-    });
+
+    res.status(201).json({ success: true, message: "Project created successfully", data: project });
   } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
+/**
+ * Public: list all projects
+ */
 exports.getProjects = async (req, res) => {
   try {
     const projects = await Project.find()
       .sort({ createdAt: -1 })
       .populate("userId", "name email username");
-    return res.json({ success: true, data: projects });
+    res.json({ success: true, data: projects });
   } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
+/**
+ * Protected: list the logged‑in user’s projects
+ */
 exports.getMyProjects = async (req, res) => {
   try {
-    const projects = await Project.find({ userId: req.user.id }).populate(
-      "userId",
-      "name email username"
-    );
+    const projects = await Project.find({ userId: req.user.id })
+      .populate("userId", "name email username");
     res.json({ success: true, data: projects });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 };
 
+/**
+ * Public: get any project (for view‑only page)
+ */
 exports.getProjectById = async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id).populate(
-      "userId",
-      "name email username"
-    );
+    const project = await Project.findById(req.params.id)
+      .populate("userId", "name email username");
     if (!project) {
       return res.status(404).json({ success: false, error: "Project not found" });
     }
-    return res.json({ success: true, data: project });
-  } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
-  }
-};
-
-exports.likeProject = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const project = await Project.findById(id);
-
-    if (!project) {
-      return res.status(404).json({ success: false, error: "Project not found" });
-    }
-
-    if (project.likedBy.includes(req.user.id)) {
-      return res.status(400).json({
-        success: false,
-        error: "You have already liked this project.",
-      });
-    }
-
-    project.likedBy.push(req.user.id);
-    project.likes += 1;
-    await project.save();
-
-    return res.json({ success: true, data: project });
-  } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
-  }
-};
-
-exports.getProjectsByUser = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const projects = await Project.find({ userId }).populate(
-      "userId",
-      "name email username"
-    );
-    res.json({ success: true, data: projects });
+    res.json({ success: true, data: project });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 };
 
-exports.deleteProject = async (req, res) => {
+/**
+ * ★ Protected: fetch for editing.
+ *    Only the owner may succeed.
+ */
+exports.getProjectForEdit = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id)
+      .populate("userId", "_id");
+    if (!project) {
+      return res.status(404).json({ success: false, error: "Project not found" });
+    }
+    if (project.userId._id.toString() !== req.user.id) {
+      return res.status(403).json({ success: false, error: "Not authorized to edit this project" });
+    }
+    // safe to send full data now
+    res.json({ success: true, data: project });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+/**
+ * Protected: apply edits (owner only)
+ */
+exports.updateProject = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
     if (!project) {
@@ -176,9 +143,100 @@ exports.deleteProject = async (req, res) => {
     if (project.userId.toString() !== req.user.id) {
       return res.status(403).json({ success: false, error: "Not authorized" });
     }
-    await project.deleteOne();
-    return res.json({ success: true, message: "Project deleted successfully" });
+
+    // fields from form
+    const {
+      domain,
+      "project-title": title,
+      "project-description": description,
+      "project-links": projectLinks,
+      "team-members": teamMembers,
+    } = req.body;
+
+    // preserve or replace URLs
+    let fileUrl      = project.fileUrl;
+    let previewUrl   = project.previewUrl;
+    let photoUrls    = project.photoUrls;
+    let demoVideoUrl = project.demoVideoUrl || "";
+
+    if (req.files?.file) {
+      fileUrl = await uploadToCloudinary(req.files.file[0].buffer, "project_showcase");
+    }
+    if (req.files?.previewImage) {
+      previewUrl = await uploadToCloudinary(req.files.previewImage[0].buffer, "project_previews");
+    }
+    if (req.files?.projectImages) {
+      photoUrls = await Promise.all(
+        req.files.projectImages.map(f => uploadToCloudinary(f.buffer, "project_showcase"))
+      );
+    }
+    if (req.files?.["demo-video"]) {
+      demoVideoUrl = await uploadToCloudinary(req.files["demo-video"][0].buffer, "project_videos");
+    }
+
+    const linksArray       = projectLinks ? projectLinks.split(",").map(l => l.trim()).filter(l => l) : [];
+    const teamMembersArray = teamMembers ? teamMembers.split(",").map(m => m.trim()).filter(m => m) : [];
+
+    // apply updates
+    project.title         = title;
+    project.description   = description;
+    project.domain        = domain;
+    project.fileUrl       = fileUrl;
+    project.previewUrl    = previewUrl;
+    project.photoUrls     = photoUrls;
+    project.demoVideoUrl  = demoVideoUrl;
+    project.projectLinks  = linksArray;
+    project.teamMembers   = teamMembersArray;
+
+    await project.save();
+    res.json({ success: true, message: "Project updated successfully", data: project });
   } catch (err) {
-    return res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+
+// Like a project
+exports.likeProject = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ success:false, error:"Project not found" });
+
+    if (project.likedBy.includes(req.user.id)) {
+      return res.status(400).json({ success:false, error:"You have already liked this project." });
+    }
+
+    project.likedBy.push(req.user.id);
+    project.likes += 1;
+    await project.save();
+    res.json({ success:true, data: project });
+  } catch (err) {
+    res.status(500).json({ success:false, error: err.message });
+  }
+};
+
+// Projects by a specific user
+exports.getProjectsByUser = async (req, res) => {
+  try {
+    const projects = await Project.find({ userId: req.params.userId })
+      .populate("userId", "name email username");
+    res.json({ success:true, data: projects });
+  } catch (err) {
+    res.status(500).json({ success:false, error: err.message });
+  }
+};
+
+// Delete a project
+exports.deleteProject = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ success:false, error:"Project not found" });
+    if (project.userId.toString() !== req.user.id)
+      return res.status(403).json({ success:false, error:"Not authorized" });
+
+    await project.deleteOne();
+    res.json({ success:true, message:"Project deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ success:false, error: err.message });
   }
 };
