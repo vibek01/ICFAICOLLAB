@@ -2,7 +2,6 @@ Project Showcase - A Collaboration Platform
 
 Slides
 Introduction - Brief overview of the project and its purpose.
-
 Problem Statement - What challenges does Project Showcase solve for students and developers?
 
 Project Objectives - Key goals: Collaboration, Project Sharing, Team Building, etc.
