@@ -1,0 +1,20 @@
+Project Showcase - A Collaboration Platform
+
+Slides
+Introduction - Brief overview of the project and its purpose.
+
+Problem Statement - What challenges does Project Showcase solve for students and developers?
+
+Project Objectives - Key goals: Collaboration, Project Sharing, Team Building, etc.
+
+Key Features - Highlight the core features: Auth, Profile, Uploads, etc.
+
+Tech Stack - Technologies used in backend (Node.js, Express, MongoDB), deployment (vercel, github), and third-party services (Cloudinary, etc.).
+
+Database Design - Overview of major MongoDB collections and relationships (users, projects).
+
+User Interface (UI) Overview - Show screenshots or mockups: Login, Profile, Upload Project, etc.
+
+Deployment & Hosting - Brief on GitHub integration and deployment on Vercel.
+
+Conclusion & Future Scope - Summary, challenges faced, and possible future improvements (e.g., chat, notifications, frontend redesign, etc.)
