@@ -1,7 +1,7 @@
 {
   "name": "icfaicollab-backend",
   "version": "1.0.0",
-  "description": "Backend for The project",
+  "description": "Backend for The project ICFAICOLLAB",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
